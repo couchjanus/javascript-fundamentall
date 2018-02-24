@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Hello world</title>
+        <link rel="stylesheet" href="/css/main.css">
+    </head>
+
+    <body>
+        <ul class="flex-menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+
+        <h1>Hello, string!</h1>
+
+    <script>
+
+    // declaring strings
+
+    var srt1 = 'this is my string',
+        srt2 = 'my second string',
+        srt3 = "my name is chris";
+    
+    // numbers
+    let num1 = 10,
+        num2 = 500,
+        num3 = 3.14;
+
+    // booleans (truthy / falsy)
+    let b1 = true;
+        b2 = false;
+    
+    // arrays
+    const users = ['chris', 'nick', 'holly'];
+    const luckyNumbers = [1, 43, 54, 132];
+    const whatever = ['chris', 1, 'holly'];
+
+    // objects
+    const user = {
+      name: 'Chris',
+      username: 'chrisoncode'
+    };
+
+    var message = "some string";
+    console.log(typeof(message));
+    console.log(typeof(b1)); 
+    console.log(typeof(num3)); 
+    console.log(typeof(users)); 
+    console.log(typeof(user)); 
+
+    console.log(typeof(null)); 
+    
+    console.log(typeof(function(){})); 
+
+    var messageUndifined;
+    console.log(messageUndifined == undefined);
+
+    var messageUndifined = undefined;
+    console.log(messageUndifined == undefined);
+
+    var intNum = 55; // целое ЧИСЛО
+
+    var octaNum = 070 ; // 56 в восьмеричном формате
+    // var octalNumЗ = 08; // недопустимое восьмеричное значение - интерпретируется как 8
+
+    var hexNuml=0xA;
+    var hexNum2=0x1f;
+
+    var floatNuml=1.1;
+    var floatNum2=0.1;
+    var floatN=1.; // интерпретируется как целое число 1
+    var floatNum=3.125e7 // 31250000
+
+    console.log( isNaN(NaN));   // true
+    console.log( isNaN(10)) ;   // false
+    console.log( isNaN("10"));  // false
+    console.log( isNaN("Ыuе")); // true
+    console.log( isNaN(true));  // false
+
+    // Унарный оператор «плюс» работает так же, как функция Number().
+    
+    var num = (+"1.1") + (+"1.1") // 2.2
+    var num = parseInt("0xAF", 16); //175
+
+    var num =  parseFloat("1234blue");
+    var num = parseFloat("22.5");
+
+    console.log(1/2); /* возвращает 0.5 */
+    console.log(1/2 == 1.0/2.0); /* возвращает true */
+
+    console.log("my " + "string");  // в консоли выведется строка  "my string".
+
+    var  mystring = "alpha";  
+    mystring += "bet"; // получается значение "alphabet" и присваивается mystring.
+
+    </script>        
+    </body>
+</html>

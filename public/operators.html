@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <title>Hello world</title>
+        <link rel="stylesheet" href="/css/main.css">
+    </head>
+
+    <body>
+        <ul class="flex-menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+
+        <h1>Hello, string!</h1>
+
+    <script>
+
+    // Оператор группировки ( ) контролирует порядок выполнения в выражениях. 
+    var a = 1;
+    var b = 2;
+    var c = 3;
+    console.log(a + b * c);     // 7 обычный порядок
+    console.log(a + (b * c));   // 7
+    // теперь поменяем порядок сложение до умножения
+    console.log((a + b) * c);   // 9
+    // что эквивалентно следующему
+    console.log(a * c + b * c); // 9
+
+    var theNumber = prompt("Выбери число ", "");
+    if (!isNaN(theNumber)){
+        console.log("квадратный корень из " +  theNumber * theNumber);
+    }
+
+    var theNumber = Number(prompt("Выбери число", ""));
+
+    if (!isNaN(theNumber)){
+        alert("квадратный корень из " + theNumber * theNumber);
+    }
+    else{
+        alert("ты ввёл не число");
+    }
+
+    var num = Number(prompt("Выбери число", "0"));
+    if (num < 10){
+        alert("No");
+    }else if (num < 100){
+        alert("Ok");
+    }else{
+        alert("Nop");
+    }
+
+    
+    </script>        
+    </body>
+</html>

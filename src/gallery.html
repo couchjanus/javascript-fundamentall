@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <title>Hello world</title>
+        <link rel="stylesheet" href="/css/main.css">
+
+        <style>
+                body { padding: 30px; }
+            
+                .nav li{
+                    display: inline-block;
+                }
+                .nav li a {
+                    text-decoration: none;
+                    color: white;
+                    background:red;
+                    padding: 1em;
+                }
+            
+        </style>
+    </head>
+
+    <body>
+        <ul class="flex-menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+
+        <h1>Gallery</h1>
+
+        <ul class="nav">
+              <li><a href="#" id="img1" onclick="changeImg(1);">Image 1</a></li>
+              <li><a href="#" id="img2" onclick="changeImg(2);">Image 2</a></li>
+              <li><a href="#" id="img3" onclick="changeImg(3);">Image 3</a></li>
+        </ul>
+        
+          <div id="pic">
+              <img src="images/1.jpg" />
+          </div>
+        
+        </div>
+        
+        <script>
+            function changeImg(i){
+                 var pic = document.getElementById("pic");
+                 pic.innerHTML = '<img src="images/'+i+'.jpg" />';
+                }
+        </script>
+        
+    </body>
+</html>
+    
