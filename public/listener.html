@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <title>Hello world</title>
+        <link rel="stylesheet" href="/css/main.css">
+    </head>
+
+    <body>
+        <ul class="flex-menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+
+        <h1>Hello, listener!</h1>
+        Метод EventTarget.addEventListener() регистрирует определенный обработчик события, вызванного на EventTarget.
+
+        EventTarget должен быть либо существующим элементом в документе, либо Document, либо Window, либо любым другим объектом, который поддерживает события (такой, как XMLHttpRequest).
+        Синтаксис
+        
+        target.addEventListener(type, listener[, options]);
+        target.addEventListener(type, listener[, useCapture]);
+        target.addEventListener(type, listener[, useCapture, wantsUntrusted  ]); // только Gecko/Mozilla 
+        
+        type
+            Строка, представляющая тип прослушиваемого события.
+        listener
+            Объект, который принимает уведомление, когда событие указанного типа произошло. Это должен быть объект, реализующий интерфейс EventListener или просто функция JavaScript.
+        
+        options Необязательный
+            Объект options, который определяет характеристики объекта, прослушивающего событие. Доступны следующие варианты:
+        
+                capture:  Boolean указывает, что события этого типа будут отправлены зарегистрированному слушателю listener перед отправкой на EventTarget, расположенный ниже в дереве DOM.
+                once: Boolean указывает, что слушатель должен быть вызван не более одного раза после добавления. Если true, слушатель автоматически удаляется при вызове.
+                passive:  Boolean указывает, что слушатель никогда не вызовет preventDefault(). Если все же вызов будет произведен, браузер должен игнорировать его и генерировать консольное предупреждение. Пример Improving scrolling performance with passive listeners
+                 mozSystemGroup: Boolean указывает, что слушатель должен быть добавлен в системную группу. Доступно только в коде, запущенном в XBL или в расширении Chrome.
+        
+        useCapture Необязательный
+            Если равно true, useCapture указывает, что пользователь желает начать захват. После инициализации захвата все события указанного типа будут отправлены в зарегистрированный listener перед отправкой в какой-либо EventTarget под ним в дереве DOM. События, восходящие вверх по дереву, не будут вызывать слушателей, которым назначено использовать захват. Смотрите DOM Level 3 Events для более детального объяснения. Значение useCapture по умолчанию равно false.
+            Note: For event listeners attached to the event target; the event is in the target phase, rather than capturing and bubbling phases. Events in the target phase will trigger all listeners on an element regardless of the useCapture parameter.
+            Note: useCapture became optional only in more recent versions of the major browsers; for example, it was not optional prior to Firefox 6. You should provide this parameter for broadest compatibility.
+        wantsUntrusted
+            Если равно true, слушатель будет получать сгенерированные события, посланные со страницы (по умолчанию равно false для chrome и true для обычных веб-страниц). Этот параметр доступен только в Gecko и в основном полезен для использования в аддонах и самом браузере. Смотрите Interaction between privileged and non-privileged pages для примеров использования.
+        
+        Прежде чем использовать определенное значение в объекте options, рекомендуется убедиться, что браузер пользователя поддерживает его, поскольку это дополнение, которое не все браузеры поддерживали исторически.
+        Возвращаемое значение
+        
+        
+        
+
+Зачем использовать addEventListener?
+<button id="b1">Button1</button>
+<button id="b2">Button2</button>
+<div id="elem">
+addEventListener - это способ зарегистрировать обработчик события, описанный в документации W3C DOM. Вот список преимуществ его использования:
+
+    Позволяет добавлять множество обработчиков для одного события. Это особенно полезно для DHTML библиотек или Mozilla extensions, которые должны работать в условиях использования сторонних библиотек/расширений.
+    Предоставляет точный контроль фазы срабатывания(вызова) обработчика (захват или всплытие)
+    Срабатывает на любом DOM элементе, а не только на HTML элементах.
+
+
+
+Добавление слушателя во время обработки события
+
+Если EventListener добавлен к EventTarget во время обработки события, он не будет вызван текущими действиями, но может быть вызван на более поздней стадии обработки события, при восходящей обработке.
+Несколько одинаковых слушателей события
+
+Если зарегистрировано несколько одинаковых EventListenerов на одном EventTarget с одинаковыми параметрами, дублирующиеся слушатели игнорируются. Они не позволяют EventListener'у быть вызванным дважды, и так как одинаковые слушатели игнорируются, не требуется удалять их вручную с помощью метода removeEventListener.
+
+<div class="acontainer">
+    <h1 class="heading-primary">CSS Responsive Animated Accordion</h1>
+    <div class="accordion">
+      <dl>
+        <dt>
+          <a href="#accordion1" aria-expanded="false" aria-controls="accordion1" class="accordion-title accordionTitle js-accordionTrigger">First Accordion heading</a>
+        </dt>
+        <dd class="accordion-content accordionItem is-collapsed" id="accordion1" aria-hidden="true">
+          <p>Lorem ipsum dolor sit amet, consectetur <a href="https://www.google.com">Test</a>adipiscing elit. Morbi eu interdum diam. Donec interdum porttitor risus non bibendum. Maecenas sollicitudin eros in quam imperdiet placerat. Cras justo purus, rhoncus nec lobortis ut, iaculis vel ipsum. Donec dignissim arcu nec elit faucibus condimentum. Donec facilisis consectetur enim sit amet varius. Pellentesque justo dui, sodales quis luctus a, iaculis eget mauris. </p>
+          <p>Aliquam dapibus, ante quis fringilla feugiat, mauris risus condimentum massa, at elementum libero quam ac ligula. Pellentesque at rhoncus dolor. Duis porttitor nibh ut lobortis aliquam. Nullam eu dolor venenatis mauris placerat tristique eget id dolor. Quisque blandit adipiscing erat vitae dapibus. Nulla aliquam magna nec elementum tincidunt.</p>
+        </dd>
+        <dt>
+          <a href="#accordion2" aria-expanded="false" aria-controls="accordion2" class="accordion-title accordionTitle js-accordionTrigger">
+            Second Accordion heading</a>
+        </dt>
+        <dd class="accordion-content accordionItem is-collapsed" id="accordion2" aria-hidden="true">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi eu interdum diam. Donec interdum porttitor risus non bibendum. Maecenas sollicitudin eros in quam imperdiet placerat. Cras justo purus, rhoncus nec lobortis ut, iaculis vel ipsum. Donec dignissim arcu nec elit faucibus condimentum. Donec facilisis consectetur enim sit amet varius. Pellentesque justo dui, sodales quis luctus a, iaculis eget mauris. </p>
+          <p>Aliquam dapibus, ante quis fringilla feugiat, mauris risus condimentum massa, at elementum libero quam ac ligula. Pellentesque at rhoncus dolor. Duis porttitor nibh ut lobortis aliquam. Nullam eu dolor venenatis mauris placerat tristique eget id dolor. Quisque blandit adipiscing erat vitae dapibus. Nulla aliquam magna nec elementum tincidunt.</p>
+        </dd>
+        <dt>
+          <a href="#accordion3" aria-expanded="false" aria-controls="accordion3" class="accordion-title accordionTitle js-accordionTrigger">
+            Third Accordion heading
+          </a>
+        </dt>
+        <dd class="accordion-content accordionItem is-collapsed" id="accordion3" aria-hidden="true">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi eu interdum diam. Donec interdum porttitor risus non bibendum. Maecenas sollicitudin eros in quam imperdiet placerat. Cras justo purus, rhoncus nec lobortis ut, iaculis vel ipsum. Donec dignissim arcu nec elit faucibus condimentum. Donec facilisis consectetur enim sit amet varius. Pellentesque justo dui, sodales quis luctus a, iaculis eget mauris. </p>
+          <p>Aliquam dapibus, ante quis fringilla feugiat, mauris risus condimentum massa, at elementum libero quam ac ligula. Pellentesque at rhoncus dolor. Duis porttitor nibh ut lobortis aliquam. Nullam eu dolor venenatis mauris placerat tristique eget id dolor. Quisque blandit adipiscing erat vitae dapibus. Nulla aliquam magna nec elementum tincidunt.</p>
+        </dd>
+      </dl>
+    </div>
+  </div>
+</div>
+
+
+<h1>3D Box <span>With CSS and JS</span></h1>
+
+<section class="container">
+  <div id="box" class="box show-front">
+    <figure class="front"></figure>
+    <figure class="back"></figure>
+    <figure class="right"></figure>
+    <figure class="left"></figure>
+    <figure class="top"></figure>
+    <figure class="bottom"></figure>
+  </div>
+</section>
+ 
+<ul id="options">
+   <li><button class="current show-front">Front</button></li>
+   <li><button class="show-back">Back</button></li>
+   <li><button class="show-right">Right</button></li>
+   <li><button class="show-left">Left</button></li>
+   <li><button class="show-top">Top</button></li>
+   <li><button class="show-bottom">Bottom</button></li>
+   <!--
+   <li><button id="toggle-backface-visibility">Toggle Backface Visibility</button></li>
+   -->
+</ul>
+
+
+
+
+<p id="element">Обычно желательно передавать элемент, на котором сработал обработчик события, например, при использовании обобщённых обработчиков для схожих элементов. При добавлении функции при помощи addEventListener() значение переменной this меняется — заметьте, что значение this передаётся в функцию от вызывающего объекта.</p>
+
+<table id="outside">
+    <tr><td id="t1">один</td></tr>
+    <tr><td id="t2">два</td></tr>
+    <tr><td id="t3">33333</td></tr>
+</table>
+
+
+<script>
+
+var init = function() {
+  var box = document.querySelector('#box'),
+      showPanelButtons = document.querySelectorAll('ul#options li button'),
+      panelClassName = 'show-front',
+      onButtonClick = function( event ){
+        box.classList.remove( panelClassName );
+        panelClassName = event.target.className;
+        box.classList.add(panelClassName);
+      };
+
+  for (var i=0, len = showPanelButtons.length; i < len; i++) {
+    showPanelButtons[i].addEventListener( 'click', onButtonClick, false);
+  }
+
+};
+  
+
+window.addEventListener( 'DOMContentLoaded', init, false);   
+
+(function(){
+    
+    var d = document,
+        accordionToggles = d.querySelectorAll('.js-accordionTrigger'),
+        setAria,
+        setAccordionAria,
+        switchAccordion,
+        touchSupported = ('ontouchstart' in window),
+        pointerSupported = ('pointerdown' in window);
+  
+    skipClickDelay = function(e){
+        e.preventDefault();
+        e.target.click();
+    }
+
+	setAriaAttr = function(el, ariaType, newProperty){
+		el.setAttribute(ariaType, newProperty);
+	};
+	
+    setAccordionAria = function(el1, el2, expanded){
+		switch(expanded) {
+            case "true":
+                setAriaAttr(el1, 'aria-expanded', 'true');
+                setAriaAttr(el2, 'aria-hidden', 'false');
+                break;
+            case "false":
+                setAriaAttr(el1, 'aria-expanded', 'false');
+                setAriaAttr(el2, 'aria-hidden', 'true');
+                break;
+            default:
+                break;
+        }
+	};
+
+    switchAccordion = function(e) {
+        
+        e.preventDefault();
+  
+        var thisAnswer = e.target.parentNode.nextElementSibling;
+        var thisQuestion = e.target;
+
+        if(thisAnswer.classList.contains('is-collapsed')) {
+            setAccordionAria(thisQuestion, thisAnswer, 'true');
+        } else {
+            setAccordionAria(thisQuestion, thisAnswer, 'false');
+        }
+        
+        thisQuestion.classList.toggle('is-collapsed');
+        thisQuestion.classList.toggle('is-expanded');
+        thisAnswer.classList.toggle('is-collapsed');
+        thisAnswer.classList.toggle('is-expanded');
+        
+        thisAnswer.classList.toggle('animateIn');
+    };
+	
+    for (var i=0,len=accordionToggles.length; i<len; i++) {
+        if(touchSupported) {
+            accordionToggles[i].addEventListener('touchstart', skipClickDelay, false);
+        }
+        
+        if(pointerSupported){
+            accordionToggles[i].addEventListener('pointerdown', skipClickDelay, false);
+        }
+        
+        accordionToggles[i].addEventListener('click', switchAccordion, false);
+    }
+
+})();
+
+
+// Функция изменяет содержимое t2
+        function modifyText() {
+        var t2 = document.getElementById("t2");
+        if (t2.firstChild.nodeValue == "три") {
+            t2.firstChild.nodeValue = "два";
+        } else {
+            t2.firstChild.nodeValue = "три";
+        }
+        }
+
+        // Добавляет слушателя событий для таблицы
+        var el = document.getElementById("outside");
+        el.addEventListener("click", modifyText, false);
+
+    // В примере modifyText() регистрирует слушателя для события click, используя addEventListener(). Клик в любом месте таблицы будет поднимать обработчик и запускать modifyText().
+
+// Если вам нужно передать параметры в слушателя, вы можете использовать анонимные функции.
+// Слушатель события с анонимной функцией
+
+// Функция, изменяющая содержание t1
+function modifyText2(new_text) {
+  var t1 = document.getElementById("t1");
+  t1.firstChild.nodeValue = new_text;    
+}
+ 
+// Функция, добавляющая слушатель к таблице
+el = document.getElementById("outside");
+el.addEventListener("click", function(){modifyText2("четыре")}, false);
+
+
+// Слушатель события со стрелочной функцией
+ 
+
+ // Function to change the content of t2
+ function modifyText3(new_text) {
+   var t3 = document.getElementById("t3");
+   t3.firstChild.nodeValue = new_text;    
+ }
+  
+ // Add event listener to table with an arrow function
+ var el = document.getElementById("outside");
+ el.addEventListener("click", () => { modifyText3("four"); }, false);
+ 
+//  Обратите внимание: несмотря на то, что анонимные и стрелочные функции схожи, они имеют разные значения this.
+
+// Значение this в обработчике
+// Значение переменной this внутри modifyText() 
+// при вызове событием клика будет равно ссылке на глобальный (window) 
+// объект (или undefined при использовании strict mode)
+// В JavaScript 1.8.5 введён метод Function.prototype.bind(), 
+// который позволяет указать значение, 
+// которое должно быть использовано для всех вызовов данной функции.
+// Он позволяет вам легко обходить ситуации, в которых не ясно, 
+// чему будет равно this, в зависимости от того, в каком контексте будет вызвана ваша функция.
+// заметьте, также, что Вам будет необходимо иметь внешню ссылку на слушатель, 
+// чтобы Вы могли удалить его позже.
+
+// Пример с использованием bind и без него:
+
+var Something1 = function(element) {
+  this.name = 'Something Good 1';
+  this.onclick1 = function(event) {
+    console.log(this.name); // undefined, так как this является элементом
+  };
+  this.onclick2 = function(event) {
+    console.log(this.name); // 'Something Good', так как в this передано значение объекта Something
+  };
+  element.addEventListener('click', this.onclick1, false);
+  element.addEventListener('click', this.onclick2.bind(this), false); // Trick
+}
+
+// Проблема в примере выше заключается в том, 
+// что Вы не можете удалить слушатель, вызванный с  with bind. 
+// Другое решение использует специальную функцию handleEvent, 
+// чтобы перехватывать любые события:
+
+var Something2 = function(element) {
+  this.name = 'Something Good 2';
+  this.handleEvent = function(event) {
+    console.log(this.name); // 'Something Good', так как this является объектом Something
+    switch(event.type) {
+      case 'click':
+        // код обработчика...
+        break;
+      case 'dblclick':
+        // код обработчика...
+        break;
+    }
+  };
+
+
+// В этом случае слушатели хранятся в this, 
+//   а не в this.handleEvent
+  element.addEventListener('click', this, false);
+  element.addEventListener('dblclick', this, false);
+
+  // Вы можете напрямую удалять слушатели
+  element.removeEventListener('click', this, false);
+  element.removeEventListener('dblclick', this, false);
+}
+Something1(b1);
+Something2(b2);
+
+// Вопросы памяти
+
+var i;
+var els = document.getElementsByTagName('*');
+
+// Случай 1
+for(i=0 ; i<els.length ; i++){
+  els[i].addEventListener("click", function(e){/*некоторые действия*/}, false);
+}
+
+// Случай 2
+function processEvent(e){
+  /*некоторые действия*/
+}
+
+for(i=0 ; i<els.length ; i++){
+  els[i].addEventListener("click", processEvent, false);
+}
+
+// В первом случае новая (анонимная) функция создаётся при каждом шаге цикла.
+// Во втором случае одна заранее объявленная функция 
+// используется как обработчик события. 
+// Из этого следует меньшее потребление памяти. 
+// Более того, в первом случае, вследствие отсутствия ссылок на анонимные функции, 
+// невозможно вызвать element.removeEventListener, 
+// потому что нет ссылки на обработчик, в то время, как 
+// во втором случае возможно вызвать myElement.removeEventListener("click", processEvent, false).
+
+
+// Улучшение производительности прокрутки с помощью passive: true
+
+// Значение по умолчанию для параметра passive - false. Начиная с Chrome 56 (desktop, Chrome for Android, Android webview) значение по умолчанию для touchstart и touchmove равно true, а вызовы preventDefault() не разрешены. Чтобы отменить это поведение, необходимо установить параметр passive в false (см. пример ниже). Это изменение не позволяет слушателю блокировать показ страницы во время прокрутки пользователя. Демонстрация доступна на сайте разработчиков Google. Обратите внимание, что Edge вообще не поддерживает options, и добавление его без проверки поддержки помешает использовать аргумент useCapture.
+
+ 
+
+/* Feature detection */ 
+var passiveSupported = false; 
+try {
+    window.addEventListener(
+        "test", 
+        null, 
+        Object.defineProperty({}, "passive", { get: function() { passiveSupported = true; } })); 
+} catch(err) {} 
+
+/* Event Listener */ 
+var elem = document.getElementById('elem'); 
+elem.addEventListener(
+    'touchmove', 
+    function listener() {   /* do something */ }, 
+    passiveSupported ? { passive: true } : false
+);
+
+// Установка passive не имеет значения для основного события scroll, поскольку его нельзя отменить, поэтому его слушатель в любом случае не может блокировать показ страницы.
+
+
+// Старый способ регистрации обработчиков событий
+
+// addEventListener() был добавлен в спецификации DOM 2 Events. До этого слушатели добавлялись следующим образом:
+
+// Передача ссылки на функцию — не добавляйте '()' после него, это вызовет функцию!
+el.onclick = modifyText;
+
+// Использование функционального выражения
+element.onclick = function() {
+  // ... логика функции ...
+};
+
+// Этот метод заменяет текущие слушатели события click, если они есть. Тоже самое для других событий и ассоциируемых с ними  обработчиков, таких как blur (onblur), keypress (onkeypress), и так далее.
+
+// Так как это по существу было частью DOM 0, этот метод имеет широкую поддержку и не требует специального кросс-браузерного кода; следовательно, это обычно используется, чтобы добавлять слушатели динамически, если не требуются расширенные возможности addEventListener().
+
+// Безопасная проверка поддержки option
+        
+        // Например, если вы хотите проверить параметр passive:
+        
+        var passiveSupported = false;
+        
+        try {
+          var options = Object.defineProperty({}, "passive", {
+            get: function() {
+              passiveSupported = true;
+            }
+          });
+        
+          window.addEventListener("test", null, options);
+        } catch(err) {}
+        
+        // Этот код создает объект options с геттером для свойства passive, устанавливающим флаг passiveSupported в true, если он вызван. Это означает, что если браузер проверяет значение свойства passive на объекте options, значение passiveSupported будет установлено в true; в противном случае он останется ложным. Затем мы вызываем addEventListener, чтобы настроить фальшивый обработчик событий, указав эти параметры для проверки опций, если браузер распознает объект в качестве третьего параметра.
+        
+        // Для проверки поддержки использования какой-либо опции можно просто добавить геттер для нее, используя код, подобный тому, что показан выше.
+        
+// Если вы хотите добавить прослушиватель событий, 
+// использующий параметры, о которых идет речь, 
+// вы можете сделать это подобным образом:
+
+let handleMouseUp = function(){
+
+}
+
+el.addEventListener("mouseup", handleMouseUp, passiveSupported
+                        ? { passive: true } : false);
+        
+// Здесь мы добавляем слушателя для события mouseup элемента elementElement. Для третьего параметра, если passiveSupported имеет значение true, мы указываем объект options с passive: true; в противном случае мы знаем, что нам нужно передать логическое значение, и мы передаем false как значение параметра useCapture.
+
+
+
+
+    </script>        
+    </body>
+</html>

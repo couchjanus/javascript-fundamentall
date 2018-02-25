@@ -24,7 +24,6 @@
     "gulp-sourcemaps": "^2.6.4",
     "gulp-uglify": "^3.0.0",
     "gulp-watch": "^5.0.0",
-    "jquery": "^1.9.1",
     "popper": "^1.0.1",
     "popper.js": "^1.12.9",
     "rimraf": "^2.6.2"
