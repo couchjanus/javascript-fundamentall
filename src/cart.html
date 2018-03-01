@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <title>Hello world</title>
+        <link rel="stylesheet" href="/css/main.css">
+
+        <style>
+            
+        </style>
+    </head>
+
+    <body>
+            <nav class="navbar">
+                    <nav class="wrapper">
+                      <div class="logo"><img src="/images/logo.png"></div><!-- Logo -->
+                      <input type="checkbox" id="menu-toggle" />
+                        <label for="menu-toggle" class="label-toggle"></label>
+                      <ul class="flexmenu">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="#" class="menuButton">Shopping</a></li>
+                      </ul>
+                    </nav>
+                </nav>
+                <h1>Hello, Grid!</h1>        
+        
+                <div class="grid-layout">
+                        
+                </div>
+        
+                <template class="cart">
+                  <figure class="snip blue hover">
+                    <img>
+                    <div class="price"></div>
+                        <figcaption>
+                            <h3></h3>
+                            <p>
+                            </p><a href="#">Add to Cart</a>
+                        </figcaption>
+                  </figure>
+                              
+                </template>
+               
+             
+            <script>
+              
+              if ('content' in document.createElement('template')) {
+
+               var t = document.querySelector('#cart');
+
+               var gridLayout = document.querySelector(".grid-layout");
+               var figure = t.content.querySelector("figure");
+                figure.setAttribute('class', "snip blue hover");
+
+               var figureImg = t.content.querySelector("img");
+                figureImg.setAttribute('src', "/images/cat2.jpg");
+                figure.appendChild(figureImg);
+        
+               var div = t.content.querySelector("div");
+                div.setAttribute('class', "price");
+               var figcaption = t.content.querySelector("figcaption");
+                h3 = t.content.querySelector("h3");
+                h3.textContent = "Denim Shirt";
+                figcaption.appendChild(h3);
+                p = t.content.querySelector("p");
+                p.textContent = "I don't need to compromise on my principles, because they don't have the slightest bearing on what happens to me anyway.";
+                figcaption.appendChild(p);
+                a = t.content.querySelector("a");
+                a.textContent = "Add to Cart";
+                figcaption.appendChild(p);
+
+                
+                figure.appendChild(div);
+                figure.appendChild(figcaption);
+                figure.appendChild(figcaption);
+                gridLayout.appendChild(figure);
+              }                
+        
+            </script> 
+        <!-- <script src="/js/main.js"></script> -->
+    </body>
+</html>
+    

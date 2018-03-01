@@ -99,18 +99,8 @@ footer{
 	@include setColor(#3498db);
   }
 
-
-
-// .box{
-//   background: skyblue;
-//   margin-bottom:.3em;
-//   margin-top: 0.3em;
-//   padding:.6em;
-//   overflow: hidden;
-//   white-space: nowrap;
-//   text-overflow: ellipsis;
-// }
-
-// .box .box{
-// 	background: salmon;
-// }
+	h1 {
+		font-size: 3em;
+		padding: 3em 0 1em 0;
+	}
+	
