@@ -193,25 +193,71 @@
       </article>
     
     </div>            
-               
-             
-    <script>
-
-      document.addEventListener("DOMContentLoaded", ready);
-   
-       function ready() {
-   
-           document.getElementById("cart-trigger").addEventListener('click', function () {
-             console.log("It's Cart Trogger");
+    
+    <!-- Footer Area Start -->
+    <footer id="footer">
+    </footer>
+    <!-- Footer Area Stop -->
+    <div id="shadow-layer" class="shadow-layer"></div>
+    <!-- Aside Area Start -->
+    <aside id="cart-sidebar" class="cart">
+        <a href="" class="remove"><i class="fas fa-times fa-2x"></i></a>
         
-           });
-       }
-
-
+        <h2>Cart</h2>
+        <!-- cart-items start-->
+        <ul class="cart-items">
+            <li>
+                <span class="item-quantity">1x</span> <span class="item-name">Product Name</span>
+                <div class="item-price">$9.99</div>
+                <a href="#0" class="item-remove"></a>
+            </li>
+        </ul> 
+        <!-- cart-items end -->
+    
+        <div class="cart-total">
+            <p>Total <span>$39.96</span></p>
+        </div> <!-- cart-total -->
+    
+        <a href="#" class="checkout-button">Checkout</a>
+    </aside> <!-- cart end -->
+    <!-- Aside Area end -->             
+    
+    <script>
       
-      </script>
+        function toggle_panel(panel, background_layer) {
+                if (panel.classList.contains('show-sidebar')) {
+                    panel.classList.remove('show-sidebar');
+                    background_layer.classList.remove('is-visible');
+                } else {
+                    panel.classList.add('show-sidebar');
+                    background_layer.classList.add('is-visible');
+                }
+        }
 
-  
-    <!-- <script src="/js/main.js"></script> -->
+
+        function ready() {
+            
+            document.getElementById("cart-trigger").addEventListener('click', function () {
+                toggle_panel(document.getElementById("cart-sidebar"), document.getElementById("shadow-layer"));
+            });
+
+            document.querySelector("#cart-sidebar .remove").addEventListener('click', function () {
+                toggle_panel(document.getElementById("cart-sidebar"), document.getElementById("shadow-layer"));
+                }
+            );
+
+            var hamburgerToggle = document.querySelector('#menu-toggle');
+    
+            hamburgerToggle.addEventListener('click', function(e){
+                e.preventDefault();
+                
+                document.querySelector('.flexmenu').classList.toggle('active');
+            });
+            
+        }
+
+        document.addEventListener("DOMContentLoaded", ready);
+
+      </script>
   </body>
 </html>

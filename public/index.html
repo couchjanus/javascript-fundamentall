@@ -30,25 +30,47 @@
         <h1>Hello, JavaScrit!</h1>
 
         <ul class="categories">
-            <li><a class="tag-block tag-block--css" href="hello.html">Hello World</a></li>
-            <li><a class="tag-block tag-block--sass" href="vars.html">Объявление переменных</a></li>
-            <li><a class="tag-block tag-block--foundation" href="table.html">Table</a></li>
-
-            <li><a class="tag-block tag-block--html" href="listener.html">addEventListener</a></li>
-
-            <li><a class="tag-block tag-block--rails" href="sidebar.html">Sidebar</a></li>
-
             <li><a class="tag-block tag-block--css" href="cart.html">Cart</a></li>
+
+            <li><a class="tag-block tag-block--html" href="listener.html">Event Listener</a></li>
             
-            <li><a class="tag-block tag-block--css" href="sdom.html">SDOM</a></li>
+            <li><a class="tag-block tag-block--rails" href="sidebar.html">Sidebar</a></li>
+            <li><a class="tag-block tag-block--css" href="hamburger.html">Hamburger Menu</a></li>
+            <li><a class="tag-block tag-block--sass" href="shadow.html">Shadown</a></li>
+            <li><a class="tag-block tag-block--foundation" href="megamenu.html">Mega Menu</a></li>
 
-            <li><a class="tag-block tag-block--sass" href="gallery.html">Gallery</a></li>
-
-            <li><a class="tag-block tag-block--sass" href="calc.html">Calck</a></li>
-
+            <li><a class="tag-block tag-block--sass" href="buynow.html">Buy Now</a></li>
+            <li><a class="tag-block tag-block--css" href="cancel.html">Cancel</a></li>
+            <li><a class="tag-block tag-block--sass" href="addtocart.html">Add To Cart</a></li>
+            
+            <li><a class="tag-block tag-block--css" href="elementsbyclass.html">Elements Class</a></li>
             
         </ul>    
     
         <script src="/js/main.js"></script>
+
+      
+        <script>
+            console.log(document.body);
+            console.log(document.body.innerHTML); // читаем текущее содержимое
+            
+            // document.body.innerHTML = 'Новый BODY!'; // заменяем содержимое
+            console.log(document.body['innerHTML']);
+
+            function ready() {
+                console.log("Document is ready!");
+            }
+
+            document.addEventListener("DOMContentLoaded", ready);
+
+            window.onbeforeunload = function() {
+                return "Данные не сохранены. Точно перейти?";
+            };
+
+
+        </script>
+
+    
+      
     </body>
 </html>

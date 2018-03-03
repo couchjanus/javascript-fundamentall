@@ -1,10 +1,11 @@
 .grid-layout {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     grid-gap: 10px;
-    grid-auto-rows: minmax(300px, auto);
+    grid-auto-rows: minmax(250px, auto);
     grid-auto-flow: dense;
     padding: 10px;
+    
 }
 
 .grid-item {
@@ -13,10 +14,11 @@
     font-weight: bold;
     text-transform: uppercase;
     color: #929796;
-    background-color: #333;
+    perspective: 700px;
+    background-color: white;
     border-radius: 5px;
     &:nth-child(odd) {
-        background-color: #424242;
+        background-color: white;
     }
 }
 .span-2 {
