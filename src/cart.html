@@ -194,24 +194,43 @@
     
     </div>            
                
-             
+    <script src="/js/jquery.min.js"></script>             
+    <!-- <script src="/js/main.js"></script> -->
     <script>
 
       document.addEventListener("DOMContentLoaded", ready);
    
        function ready() {
    
-           document.getElementById("cart-trigger").addEventListener('click', function () {
-             console.log("It's Cart Trogger");
+          //  document.getElementById("cart-trigger").addEventListener('click', function () {
+          //    console.log("It's Cart Trigger");
         
-           });
+          //  });
        }
+      
+       $(function () {
+
+          const cart_trigger = $('#cart-trigger');
+
+          console.log(cart_trigger, "It's Cart Trigger");
+          // Object [ a#cart-trigger ] It's Cart Trogger
+
+          // $('#cart-trigger').click(function(){
+          //   console.log("jQuery: It's Cart Trigger");
+          // });
+          
+          $('#cart-trigger').on('click', function(){
+            console.log("jQuery Event on: It's Cart Trigger");
+          });
+
+
+        });
 
 
       
       </script>
 
   
-    <!-- <script src="/js/main.js"></script> -->
+    
   </body>
 </html>

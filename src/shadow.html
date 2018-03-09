@@ -222,41 +222,68 @@
     </aside> <!-- cart end -->
     <!-- Aside Area end -->             
     
+    <script src="/js/jquery.min.js"></script>
+
     <script>
       
+        // function toggle_panel(panel, background_layer) {
+        //         if (panel.classList.contains('show-sidebar')) {
+        //             panel.classList.remove('show-sidebar');
+        //             background_layer.classList.remove('is-visible');
+        //         } else {
+        //             panel.classList.add('show-sidebar');
+        //             background_layer.classList.add('is-visible');
+        //         }
+        // }
+        
         function toggle_panel(panel, background_layer) {
-                if (panel.classList.contains('show-sidebar')) {
-                    panel.classList.remove('show-sidebar');
-                    background_layer.classList.remove('is-visible');
+                if (panel.hasClass('show-sidebar')) {
+                    panel.removeClass('show-sidebar');
+                    background_layer.removeClass('is-visible');
                 } else {
-                    panel.classList.add('show-sidebar');
-                    background_layer.classList.add('is-visible');
+                    panel.addClass('show-sidebar');
+                    background_layer.addClass('is-visible');
                 }
         }
 
 
-        function ready() {
+        // function ready() {
             
-            document.getElementById("cart-trigger").addEventListener('click', function () {
-                toggle_panel(document.getElementById("cart-sidebar"), document.getElementById("shadow-layer"));
-            });
+        //     document.getElementById("cart-trigger").addEventListener('click', function () {
+        //         toggle_panel(document.getElementById("cart-sidebar"), document.getElementById("shadow-layer"));
+        //     });
 
-            document.querySelector("#cart-sidebar .remove").addEventListener('click', function () {
-                toggle_panel(document.getElementById("cart-sidebar"), document.getElementById("shadow-layer"));
-                }
-            );
+        //     document.querySelector("#cart-sidebar .remove").addEventListener('click', function () {
+        //         toggle_panel(document.getElementById("cart-sidebar"), document.getElementById("shadow-layer"));
+        //         }
+        //     );
 
-            var hamburgerToggle = document.querySelector('#menu-toggle');
+        //     var hamburgerToggle = document.querySelector('#menu-toggle');
     
-            hamburgerToggle.addEventListener('click', function(e){
-                e.preventDefault();
+        //     hamburgerToggle.addEventListener('click', function(e){
+        //         e.preventDefault();
                 
-                document.querySelector('.flexmenu').classList.toggle('active');
-            });
+        //         document.querySelector('.flexmenu').classList.toggle('active');
+        //     });
             
-        }
+        // }
 
-        document.addEventListener("DOMContentLoaded", ready);
+        // document.addEventListener("DOMContentLoaded", ready);
+
+      $(function(){
+        $("#cart-trigger").on('click', function () {
+            toggle_panel($('#cart-sidebar'), $('#shadow-layer'));
+        });
+        
+        $("#cart-sidebar .remove").on('click', function () {
+            toggle_panel($('#cart-sidebar'), $('#shadow-layer'));
+        });
+
+        $("#menu-toggle").on('click', function () {
+          $('.flexmenu').toggleClass('active');
+        });
+      });
+
 
       </script>
   </body>

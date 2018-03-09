@@ -221,25 +221,36 @@
         <a href="#" class="checkout-button">Checkout</a>
     </aside> <!-- cart end -->
     <!-- Aside Area end -->             
-    
+
+    <script src="/js/jquery.min.js"></script>
+
     <script>
 
-      document.addEventListener("DOMContentLoaded", ready);
+      // document.addEventListener("DOMContentLoaded", ready);
 
-        function ready() {
-            document.getElementById("cart-trigger").addEventListener('click', function () {
-                document.getElementById("cart-sidebar").classList.add('show-sidebar');
-                }
-            );
+      //   function ready() {
+      //       document.getElementById("cart-trigger").addEventListener('click', function () {
+      //           document.getElementById("cart-sidebar").classList.add('show-sidebar');
+      //           }
+      //       );
             
-            document.querySelector("#cart-sidebar .remove").addEventListener('click', function () {
-                document.getElementById("cart-sidebar").classList.remove('show-sidebar');
-                }
-            );
+      //       document.querySelector("#cart-sidebar .remove").addEventListener('click', function () {
+      //           document.getElementById("cart-sidebar").classList.remove('show-sidebar');
+      //           }
+      //       );
             
-        }
-
+      //   }
       
+      $(function(){
+        $("#cart-trigger").on('click', function () {
+            $("#cart-sidebar").addClass('show-sidebar');
+        });
+        
+        $("#cart-sidebar .remove").on('click', function () {
+            $("#cart-sidebar").removeClass('show-sidebar');
+        });
+      });
+
       </script>
   </body>
 </html>
