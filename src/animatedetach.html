@@ -24,7 +24,7 @@
           <li><a href="#" id="catalog">Products</a></li>
           <li><a href="blog.html">Blog</a></li>
           <li><a href="contact.html">Contact</a></li>
-          <li><a href="#" id="cart-trigger"><i class="fas  fa-shopping-cart"></i>&nbsp;Cart</a></li>
+          <li><a href="#" id="cart-trigger"><i class="fas  fa-shopping-cart shopping-cart"></i>&nbsp;Cart</a></li>
         </ul>
       </nav>
     </nav>
@@ -129,71 +129,71 @@
         </article>            
   
     
-    </div>
+    </div> 
     
     <!-- Footer Area Start -->
     <footer id="footer">
-      </footer>
-      <!-- Footer Area Stop -->
-      <div id="shadow-layer" class="shadow-layer"></div>
-      <!-- Aside Area Start -->
-      <aside id="cart-sidebar" class="cart">
-          <a href="" class="remove"><i class="fas fa-times fa-2x"></i></a>
-          
-          <h2>Cart</h2>
-          <!-- cart-items start-->
-          <ul class="cart-items">
-              <li>
-                  <span class="item-quantity">1x</span> <span class="item-name">Product Name</span>
-                  <div class="item-price">$9.99</div>
-                  <a href="#0" class="item-remove"></a>
-              </li>
-          </ul> 
-          <!-- cart-items end -->
-      
-          <div class="cart-total">
-              <p>Total <span>$39.96</span></p>
-          </div> <!-- cart-total -->
-      
-          <a href="#" class="checkout-button">Checkout</a>
-      </aside> <!-- cart end -->
-      <!-- Aside Area end -->
-  
-  
-      <div class="mega-menu">
-          <div class="mega-menu-top">
-              <div class="mega-search">
-                  <label for="mega-search">Search</label>
-                  <input type="search" id="mega-search" placeholder="Search" />
-              </div>
-              <div class="close">
-                  <span>&#10006;</span> 
-              </div>
-          </div>
-          <h3>Catalog</h3>
-          <ul class="nav themes">
-              <li><a href="#"> Mice</a></li>
-              <li><a href="#"> Cats</a></li>
-              <li><a href="#"> Dogs</a></li>
-              <li><a href="#"> Rabbits</a></li>
-              <li><a href="#"> Crocodiles</a></li>
-              <li><a href="#"> Chicks</a></li>
-              <li><a href="#"> Dinosaurs</a></li>
-              <li><a href="#"> Skunks</a></li>
-              <li><a href="#"> Rats</a></li>
-              <li><a href="#"> Crows</a></li>
-          </ul>
-          <footer>
-              <div class="logo-footer">  
-                <img src="images/logo.png">
-              </div>
-              <ul class="nav footer">
-                  <li>Contact Us</li>
-                  <li>About Us</li>
-                  <li>Privacy Policy</li>
-              </ul>
-          </footer>
-      </div>
+        </footer>
+        <!-- Footer Area Stop -->
+        <div id="shadow-layer" class="shadow-layer"></div>
+        <!-- Aside Area Start -->
+        <aside id="cart-sidebar" class="cart">
+            <a href="" class="remove"><i class="fas fa-times fa-2x"></i></a>
+            
+            <h2>Cart</h2>
+            <!-- cart-items start-->
+            <ul class="cart-items">
+                <li>
+                    <span class="item-quantity">1x</span> <span class="item-name">Product Name</span>
+                    <div class="item-price">$9.99</div>
+                    <a href="#0" class="item-remove"></a>
+                </li>
+            </ul> 
+            <!-- cart-items end -->
+        
+            <div class="cart-total">
+                <p>Total <span>$39.96</span></p>
+            </div> <!-- cart-total -->
+        
+            <a href="#" class="checkout-button">Checkout</a>
+        </aside> <!-- cart end -->
+        <!-- Aside Area end -->
+    
+    
+        <div class="mega-menu">
+            <div class="mega-menu-top">
+                <div class="mega-search">
+                    <label for="mega-search">Search</label>
+                    <input type="search" id="mega-search" placeholder="Search" />
+                </div>
+                <div class="close">
+                    <span>&#10006;</span> 
+                </div>
+            </div>
+            <h3>Catalog</h3>
+            <ul class="nav themes">
+                <li><a href="#"> Mice</a></li>
+                <li><a href="#"> Cats</a></li>
+                <li><a href="#"> Dogs</a></li>
+                <li><a href="#"> Rabbits</a></li>
+                <li><a href="#"> Crocodiles</a></li>
+                <li><a href="#"> Chicks</a></li>
+                <li><a href="#"> Dinosaurs</a></li>
+                <li><a href="#"> Skunks</a></li>
+                <li><a href="#"> Rats</a></li>
+                <li><a href="#"> Crows</a></li>
+            </ul>
+            <footer>
+                <div class="logo-footer">  
+                  <img src="images/logo.png">
+                </div>
+                <ul class="nav footer">
+                    <li>Contact Us</li>
+                    <li>About Us</li>
+                    <li>Privacy Policy</li>
+                </ul>
+            </footer>
+        </div>
                
     <script src="/js/jquery.min.js"></script>             
     <!-- <script src="/js/main.js"></script> -->
@@ -210,7 +210,7 @@
         }
 
 
-        $(function(){
+    $(function(){
         $("#cart-trigger").on('click', function () {
             toggle_panel($('#cart-sidebar'), $('#shadow-layer'));
         });
@@ -258,12 +258,68 @@
                 $(e.target).parents('.product-wrapper')
                 .css('transform', 'rotateY(' + y + 'deg)');
                 $(e.target).parents('.grid-item').find('.product-back').addClass('back-is-visible');
+
+                var imgtodrag = $(e.target).parents('.product').find("img").eq(0);
+        
+                if (imgtodrag) {
+                    var imgclone = imgtodrag.clone()
+                        .offset({
+                        top: imgtodrag.offset().top,
+                        left: imgtodrag.offset().left
+                    })
+                        .css({
+                        'opacity': '0.5',
+                            'position': 'absolute',
+                            'height': '150px',
+                            'width': '150px',
+                            'z-index': '100'
+                    })
+                
+                    .appendTo($('body'))
+                        .animate({
+                        'top': $('.shopping-cart').offset().top + 10,
+                            'left': $('.shopping-cart').offset().left + 10,
+                            'width': 75,
+                            'height': 75
+                    }, 1000);
+                
+                }
+
+                imgclone.animate({
+                    'width': 0,
+                    'height': 0
+                }, function () {
+                    $(this).detach()
+                });  
+
+                $(e.target).parents('.product-wrapper').delay(3000).queue(function() {
+                    $(this).css({
+                        'transform': 'rotateY(0deg)'
+                    }).dequeue();
+                    $(e.target).parents('.product').find('p').slideDown();
+                    $(e.target).parents('.product').find('.product-menu').css('top', '80%');
+                    $(e.target).parents('.product').find('.product-detail').toggle();
+                    $(e.target).parents('.product').find('.buy-now').toggle();
+                    $(e.target).parents('.product').find('.icon').toggle();
+                });
+                
             });
+
         });
-      });
+
+        $(".plus").click(function() {
+            var val = parseInt($(this).prev().attr('value'));
+            $(this).prev().attr('value', val+1);
+        });
+
+        $(".minus").click(function() {
+            var val = parseInt($(this).next().attr('value'));
+            $(this).next().attr('value', val-1);
+        });
+
+    });
 
 
-      
     </script>
 
   

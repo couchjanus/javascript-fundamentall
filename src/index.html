@@ -32,18 +32,23 @@
         <ul class="categories">
             <li><a class="tag-block tag-block--css" href="cart.html">Cart</a></li>
 
-            <li><a class="tag-block tag-block--html" href="listener.html">Event Listener</a></li>
-            
-            <li><a class="tag-block tag-block--rails" href="sidebar.html">Sidebar</a></li>
-            <li><a class="tag-block tag-block--css" href="hamburger.html">Hamburger Menu</a></li>
-            <li><a class="tag-block tag-block--sass" href="shadow.html">Shadown</a></li>
-            <li><a class="tag-block tag-block--foundation" href="megamenu.html">Mega Menu</a></li>
+            <li><a class="tag-block tag-block--html" href="plusminus.html">Next Prev</a></li>
+            <li><a class="tag-block tag-block--sass" href="showhide.html">Show Hide</a></li>
+            <li><a class="tag-block tag-block--css" href="slideDown.html">Slide Down</a></li>
+            <li><a class="tag-block tag-block--foundation" href="fadeto.html">Fade To</a></li>
+            <li><a class="tag-block tag-block--sass" href="baseanimation.html">Base Animation</a></li>
+            <li><a class="tag-block tag-block--css" href="offset.html">offset</a></li>
+            <li><a class="tag-block tag-block--sass" href="cloneelement.html">Clone Element</a></li>
 
-            <li><a class="tag-block tag-block--sass" href="buynow.html">Buy Now</a></li>
-            <li><a class="tag-block tag-block--css" href="cancel.html">Cancel</a></li>
-            <li><a class="tag-block tag-block--sass" href="addtocart.html">Add To Cart</a></li>
             
-            <li><a class="tag-block tag-block--css" href="elementsbyclass.html">Elements Class</a></li>
+            <li><a class="tag-block tag-block--rails" href="queue.html">Queue</a></li>
+            <li><a class="tag-block tag-block--sass" href="clone.html">Clone</a></li>
+            <li><a class="tag-block tag-block--css" href="animate.html">Animate</a></li>
+            <li><a class="tag-block tag-block--sass" href="animatedetach.html">Animate Detach</a></li>
+            <li><a class="tag-block tag-block--rails" href="carousel.html">Carousel</a></li>
+            <li><a class="tag-block tag-block--rails" href="carouselnav.html">Carousel Nav</a></li>
+            
+            
             
         </ul>
         <div>
@@ -57,139 +62,7 @@
         <script>
 
         
-            // Native Javascript Получить DOM-элемент body
-
-            console.log(document.body);
             
-            // JQuery Получить DOM-элемент body
-            console.log($("body"));
-            
-            // читаем текущее содержимое
-            // console.log(document.body.innerHTML); 
-            
-            // console.log($("body").html()); 
-            
-            // console.log($("p").html()); 
-            // console.log($("p").text()); 
-            
-            // document.body.innerHTML = 'Новый BODY!'; // заменяем содержимое
-            // console.log(document.body['innerHTML']);
-            
-            // console.log($("body").html('Новый BODY!')); 
-            // console.log($("body").html()); 
-            
-            // function ready() {
-            //     console.log("Document is ready!");
-            // }
-            // document.addEventListener("DOMContentLoaded", ready);
-
-            function ready() {
-                $("p").text("Структура документа загружена и полностью сформирована!");
-            }
-            
-            $(document).ready(ready);
-
-            // $().ready(ready);
-
-            // $(function() {
-            //     //DOM-дерево готово
-            //     $("p").text("Структура документа загружена и полностью сформирована!");
-            // });
-
-            // jQuery(function($) {
-            //     // Для безопасного выполнения jQuery кода Вы можете использовать следующую конструкцию:
-
-            //     //DOM-дерево готово
-            //     $("p").text("Структура документа загружена и полностью сформирована!");
-            // });
-
-
-            // $(window).load(function () {
-            //     // манипуляции с готовой страницей
-            //     $("p").text("Страница документа загружена и полностью сформирована!");
-            // });
-
-            // $(document).ready(function(){
- 
-            //     $("p").text("Структура документа загружена и полностью сформирована!");
-
-            // });
-
-            // window.onbeforeunload = function() {
-            //     return "Данные не сохранены. Точно перейти?";
-            // };
-
-            // $(window).unload(function(){ 
-            //     alert("Пока, пользователь!"); 
-            // });
-
-            
-            // $(document).ready(function(){
-            //     $('p').css('border', '3px solid blue');
-            // });
-            
-            $(document).ready(function(){
-                
-                // $("p").text("Структура документа загружена и полностью сформирована!");
-
-                // получим значение цвета background у элемента с class, равным "navbar"
-                var background = $('.navbar').css('background-color');
-                // выведем его в консоль
-                console.log(background);
-                // rgb(51, 51, 51)
-
-                // Например, определим ширину и высоту элемента div:
-
-                var cssProperties = $('div').css(['width','height']);  // получим значения сразу нескольких CSS свойств
-                console.log(cssProperties);
-
-                // Object { width: "150px", height: "53.05px" }
-                
-                $('p').css({
-                    'color':'green',
-                    'font-size':'16px'
-                });
-
-                // Например, увеличить отступ сверху, слева и справа элементов div на 10px:
-                $('div').css({"padding-left": "+=10","padding-right":"+=10", "padding-top": "+=10"});
-
-                $('span').css('color', function(index, value) {
-                    if (value!='rgb(0, 255, 0)') {
-                        return 'red';
-                    }
-                });
-                
-                $('div').css('width','300px');
- 
-                // изменить цвет текста у всех элементов p в документе на красный:
-                myArrayP = document.getElementsByTagName("P") ; // массив, содержащий набор DOM-элементов Р
-                
-                // обернуть массив в объект jQuery и применить к нему метод jQuery css()
-                $(myArrayP).css("color", "red");
-
-                //1. Выбрать элементы div ($("div")) - получим объект jQuery, содержащий элементы div
-                //2. Изменим цвет текста для выбранных элементов (.css("color","blue")) – используем метод jQuery .css()
-                // $("div").css("backgroundColor", "blue");
-
-                // $("div").text($("p").text()+' Counts p : '+ $(myArrayP).length);
-                // $("div").css("color", "white");
-
-                // $('p').addClass('red_border');
-                // $('p').removeClass('red_border');
-            });
-
-
-            // $(document).ready(function(){
-            //         if($('p').hasClass('red_border')){
-            //             console.log('Element has class', 'red_border');  
-            //         }
-            // });
-
-            // $(document).ready(function(){
-            //     $('p').toggleClass('red_border');
-            // });
-
-
         </script>
       
     </body>
