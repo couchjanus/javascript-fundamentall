@@ -166,7 +166,7 @@
             </span>
             <div class="item-prices">
             </div>
-            <a class="item-remove" href="#0"><i class="fas fa-times"></i></a>
+            <a class="item-remove" href="#0"></a>
         </li>
       </template>
   
@@ -351,13 +351,6 @@
                 }
             });
         });
-
-        $('body').on('click', '.cart-items .item-remove', function () {
-            var $this = $(this),
-            $item = $this.parents('li');
-            $item.remove();
-        });
-
 
         let plus = document.getElementsByClassName('plus');
         plus = Array.prototype.slice.call(plus); // теперь plus - массив

@@ -261,15 +261,15 @@
             });
         });
 
-      $(".plus").click(function(e) {
-       var val = parseInt($(e.target).prev().attr('value'));
-       $(this).prev().attr('value', val+1);
-       });
+      // $(".plus").click(function(e) {
+      //  var val = parseInt($(e.target).prev().attr('value'));
+      //  $(this).prev().attr('value', val+1);
+      //  });
 
-      $(".minus").click(function(e) {
-       var val = parseInt($(e.target).next().attr('value'));
-       $(this).next().attr('value', val-1);
-       });
+      // $(".minus").click(function(e) {
+      //  var val = parseInt($(e.target).next().attr('value'));
+      //  $(this).next().attr('value', val-1);
+      //  });
       
       //  $(".plus").click(function() {
       //  var val = parseInt($(this).prev().attr('value'));
@@ -280,6 +280,22 @@
       //  var val = parseInt($(this).next().attr('value'));
       //  $(this).next().attr('value', val-1);
       //  });
+
+      
+      let plus = document.getElementsByClassName('plus');
+        for (let i=0;i<plus.length; i++) {
+            plus[i].addEventListener('click', function(e) {
+            let val = parseInt(e.target.previousElementSibling.getAttribute('value'));
+            e.target.previousElementSibling.setAttribute('value', val+1);
+            });
+      }
+      let minus = document.getElementsByClassName('minus');
+          for (let i=0;i<minus.length; i++) {
+              minus[i].addEventListener('click', function(e) {
+              let val = parseInt(e.target.nextElementSibling.getAttribute('value'));
+              e.target.nextElementSibling.setAttribute('value', val-1);
+              });
+      }
 
 
 

@@ -282,22 +282,42 @@
       //  });
 
       
+    //   let plus = document.getElementsByClassName('plus');
+    //     for (let i=0;i<plus.length; i++) {
+    //         plus[i].addEventListener('click', function(e) {
+    //         let val = parseInt(e.target.previousElementSibling.getAttribute('value'));
+    //         e.target.previousElementSibling.setAttribute('value', val+1);
+    //         });
+    //   }
+    //   let minus = document.getElementsByClassName('minus');
+    //       for (let i=0;i<minus.length; i++) {
+    //           minus[i].addEventListener('click', function(e) {
+    //           let val = parseInt(e.target.nextElementSibling.getAttribute('value'));
+    //           e.target.nextElementSibling.setAttribute('value', val-1);
+    //           });
+    //   }
+      
       let plus = document.getElementsByClassName('plus');
-        for (let i=0;i<plus.length; i++) {
-            plus[i].addEventListener('click', function(e) {
-            let val = parseInt(e.target.previousElementSibling.getAttribute('value'));
-            e.target.previousElementSibling.setAttribute('value', val+1);
+      
+      plus = Array.prototype.slice.call(plus); // теперь plus - массив
+      
+      plus.forEach(function(elem) {
+        elem.addEventListener('click', function() {
+            let val = parseInt(this.previousElementSibling.getAttribute('value'));
+            this.previousElementSibling.setAttribute('value', val+1);
             });
-      }
+      });
+
       let minus = document.getElementsByClassName('minus');
-          for (let i=0;i<minus.length; i++) {
-              minus[i].addEventListener('click', function(e) {
-              let val = parseInt(e.target.nextElementSibling.getAttribute('value'));
-              e.target.nextElementSibling.setAttribute('value', val-1);
-              });
-      }
 
-
+      minus = Array.prototype.slice.call(minus); // теперь minus - массив
+      
+      minus.forEach(function(elem) {
+        elem.addEventListener('click', function() {
+            let val = parseInt(this.nextElementSibling.getAttribute('value'));
+            this.nextElementSibling.setAttribute('value', val+1);
+            });
+      });
 
       });
 
