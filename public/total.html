@@ -46,7 +46,7 @@
               </div>
               <div class="product-menu"  productId='1'>
                 <div class="product-price">
-                  $9.99
+                  9.99
                 </div>
                 <div class="buy-now">
                   Buy now!
@@ -94,7 +94,7 @@
                 </div>
                 <div class="product-menu" productId='2'>
                   <div class="product-price">
-                    $5.55
+                    5.55
                   </div>
                   <div class="buy-now">
                     Buy now!
@@ -234,6 +234,7 @@
           $('.flexmenu').toggleClass('active');
         });
         
+        
         $("#catalog").on('click', function () {
           $('.mega-menu').toggleClass('mega-active');
         });
@@ -269,40 +270,35 @@
                 $(e.target).parents('.product-wrapper')
                 .css('transform', 'rotateY(' + y + 'deg)');
                 $(e.target).parents('.grid-item').find('.product-back').addClass('back-is-visible');
-
-
                 var imgtodrag = $(e.target).parents('.product').find("img").eq(0);
-        
-        if (imgtodrag) {
-            var imgclone = imgtodrag.clone()
-                .offset({
-                top: imgtodrag.offset().top,
-                left: imgtodrag.offset().left
-            })
-                .css({
-                'opacity': '0.5',
-                    'position': 'absolute',
-                    'height': '150px',
-                    'width': '150px',
-                    'z-index': '100'
-            })
-        
-            .appendTo($('body'))
-                .animate({
-                'top': $('.shopping-cart').offset().top + 10,
-                    'left': $('.shopping-cart').offset().left + 10,
-                    'width': 75,
-                    'height': 75
-            }, 1000);
-        
-        }
+                if (imgtodrag) {
+                    var imgclone = imgtodrag.clone()
+                        .offset({
+                        top: imgtodrag.offset().top,
+                        left: imgtodrag.offset().left
+                    })
+                        .css({
+                        'opacity': '0.5',
+                            'position': 'absolute',
+                            'height': '150px',
+                            'width': '150px',
+                            'z-index': '100'
+                    })
+                    .appendTo($('body'))
+                        .animate({
+                        'top': $('.shopping-cart').offset().top + 10,
+                            'left': $('.shopping-cart').offset().left + 10,
+                            'width': 75,
+                            'height': 75
+                    }, 1000);
+            }
 
-        imgclone.animate({
-            'width': 0,
-            'height': 0
-        }, function () {
-            $(this).detach()
-        });  
+            imgclone.animate({
+                'width': 0,
+                'height': 0
+            }, function () {
+                $(this).detach()
+            });  
 
             $(e.target).parents('.product-wrapper').delay(3000).queue(function() {
                 $(this).css({
@@ -335,24 +331,20 @@
                     matched[0].querySelectorAll(':scope > .qty .item-quantities')[0].textContent = q;
                 
             } else {
+              let template = document.querySelector('#cartItem').content;
+              template.querySelector('li').setAttribute('id', 'product_' + productId);
+              let quantity = this.parentNode.querySelectorAll(":scope > .how-many .quantity-input .quantity");
+              template.querySelector("span.item-quantities").textContent = quantity[0].getAttribute('value');
+              template.querySelector('.item-prices').setAttribute('id', "price_"+productId);
+              template.querySelector("span.item-name").textContent = ' '+this.parentNode.parentNode.querySelectorAll(":scope > .product-name")[0].textContent; 
+              
+              template.querySelector('.item-prices').textContent = this.parentNode.querySelectorAll(":scope > .product-price")[0].textContent;
+              template.querySelector('span.qty').setAttribute('style', 'background-image:'+ 'url('+this.parentNode.parentNode.querySelector('img').getAttribute('src')+')');
+              document.querySelector('.cart-items').append(document.importNode(template, true));
 
-                
-            let template = document.querySelector('#cartItem').content;
+              }
+              updateTotal();
             
-            template.querySelector('li').setAttribute('id', 'product_' + productId);
-            
-                let quantity = this.parentNode.querySelectorAll(":scope > .how-many .quantity-input .quantity");
-                
-                template.querySelector("span.item-quantities").textContent = quantity[0].getAttribute('value');
-                
-                template.querySelector('.item-prices').setAttribute('id', "price_"+productId);
-                
-                template.querySelector("span.item-name").textContent = ' '+this.parentNode.parentNode.querySelectorAll(":scope > .product-name")[0].textContent; 
-                
-                template.querySelector('.item-prices').textContent = this.parentNode.querySelectorAll(":scope > .product-price")[0].textContent;
-                document.querySelector('.cart-items').append(document.importNode(template, true));
-
-                }
             });
         });
 
@@ -380,6 +372,36 @@
               this.nextElementSibling.setAttribute('value', val+1);
               });
         });
+
+
+        function updateTotal() {
+          var quantities = 0,
+          total = 0,
+          
+          $cartTotal = $('.cart-total span'),
+          items = $('.cart-items').children();
+
+          items.each(function (index, item) {
+              var $item = $(item);
+              total += parseFloat($item.find('.item-prices').text());
+          });
+
+          $cartTotal.text(parseFloat(Math.round(total * 100) / 100).toFixed(2));
+
+          if (total === 0 ){
+            
+            $('.shopping-cart').fadeOut(500, function() {
+                    $(this).css({
+                        'backgroundColor':'',
+                        'borderRadius': '0%',
+                        'transform': 'scale(1, 1)'
+                        });
+                });
+          
+            $('.shopping-cart').fadeIn(500);        
+          }
+      }
+
 
 
       });

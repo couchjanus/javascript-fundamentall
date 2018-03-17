@@ -342,9 +342,13 @@
             template.querySelector('li').setAttribute('id', 'product_' + productId);
             
                 let quantity = this.parentNode.querySelectorAll(":scope > .how-many .quantity-input .quantity");
+                
                 template.querySelector("span.item-quantities").textContent = quantity[0].getAttribute('value');
+                
                 template.querySelector('.item-prices').setAttribute('id', "price_"+productId);
+                
                 template.querySelector("span.item-name").textContent = ' '+this.parentNode.parentNode.querySelectorAll(":scope > .product-name")[0].textContent; 
+                
                 template.querySelector('.item-prices').textContent = this.parentNode.querySelectorAll(":scope > .product-price")[0].textContent;
                 document.querySelector('.cart-items').append(document.importNode(template, true));
 
