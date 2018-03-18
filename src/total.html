@@ -24,7 +24,7 @@
           <li><a href="#" id="catalog">Products</a></li>
           <li><a href="blog.html">Blog</a></li>
           <li><a href="contact.html">Contact</a></li>
-          <li><a href="#" id="cart-trigger"><i class="fas  fa-shopping-cart shopping-cart"></i>&nbsp;Cart</a></li>
+          <li><a href="#" id="cart-trigger"><i class="fas  fa-shopping-cart shopping-cart shc"></i>&nbsp;Cart</a></li>
         </ul>
       </nav>
     </nav>
@@ -343,15 +343,24 @@
               document.querySelector('.cart-items').append(document.importNode(template, true));
 
               }
+
+              $('.shc').fadeIn(1000, function() {
+                    $(this).css({
+                        'backgroundColor':'orange',
+                        'borderRadius': '100%',
+                        'transform': 'scale(3, 3)'
+                        });
+                });
+          
+             
               updateTotal();
             
             });
         });
 
         $('body').on('click', '.cart-items .item-remove', function () {
-            var $this = $(this),
-            $item = $this.parents('li');
-            $item.remove();
+            $(this).parents('li').remove();
+            updateTotal();
         });
 
 
@@ -383,7 +392,8 @@
 
           items.each(function (index, item) {
               var $item = $(item);
-              total += parseFloat($item.find('.item-prices').text());
+              total += parseFloat($item.find('.item-prices').text())*
+              parseFloat($item.find('.item-quantities').text());
           });
 
           $cartTotal.text(parseFloat(Math.round(total * 100) / 100).toFixed(2));
@@ -401,8 +411,6 @@
             $('.shopping-cart').fadeIn(500);        
           }
       }
-
-
 
       });
 
