@@ -27,9 +27,22 @@
         </ul>
       </nav>
     </nav>
-    <h1>Hello, Cart!</h1>        
+    <h1>Hello, Storage!</h1> 
+    
+    <div class="box">
+            <div class="clock">
+              <span class="hours"></span>
+              <span class="minutes"></span>
+            </div>
+            <div class="date">
+              <div id="daymonth"></div>
+              <div id="year"></div>
+            </div>
+    </div>
+          
         
     <div class="grid-layout">
+
     
     </div>
       
@@ -124,6 +137,35 @@
             
           </article> 
         </template>
+  <template id="productDetail">
+  
+  <figure class="item">
+      <h4 class="product-name">Cool Cat</h4>
+      <div class="image">
+          <img class="slide" src=""/>
+          <img class="slide" src="images/cat2.jpg" style="display:none;" />
+          <img class="slide" src="images/cat3.jpg" style="display:none;" />
+          <img class="slide" src="images/cat4.jpg" style="display:none;" />
+      </div>
+      
+      <div class="rating">
+              <button class="prev">&#10094;&#10094;</button>
+              <button class="next">&#10095;&#10095;</button>
+          <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+      </div>
+      <figcaption productId="">
+          <p class="product-description">
+              I'm just very selective about the reality I choose to accept.
+          </p>
+          <div class="price">
+              <s class="old-price">$24.00</s><b class="product-price">$19.00</b>
+          </div>
+      </figcaption>
+      <a href="#" class="add-to-cart">Add to Cart</a>
+  </figure>
+                
+  
+  </template>
   <div class="mega-menu">
           <div class="mega-menu-top">
               <div class="mega-search">
@@ -158,38 +200,62 @@
               </ul>
           </footer>
       </div>
-    
                
     <script src="/js/jquery.min.js"></script>             
-    <!-- <script src="/js/main.js"></script> -->
+    <script src="/js/main.js"></script>
     <script src="/js/data.js"></script>
     
     <script>
       
-      function toggle_panel(panel, background_layer) {
-        if (panel.hasClass('show-sidebar')) {
-          panel.removeClass('show-sidebar');
-          background_layer.removeClass('is-visible');
-        } else {
-            panel.addClass('show-sidebar');
-            background_layer.addClass('is-visible');
+    
+      var shoppingCart = [];
+
+      function showCart(){
+        if (shoppingCart.length == 0) {
+          console.log("Your Shopping Cart is Empty!");
+          return;
         }
+
+
+      $(".cart-items").empty();
+
+        for (var i in shoppingCart) {
+            var $template = $($('#cartItem').html());
+            var item = shoppingCart[i];
+        $template.attr('id', item.Id);
+        $template.find("span.item-quantities").text(item.Quantity);
+        $template.find(".item-name").text(item.Product); 
+        $template.find('.item-price').text(item.Price);
+        $template.find('.item-prices').text(item.Quantity * item.Price);
+        $template.find('span.qty').attr('style', 'background-image:'+ 'url('+item.Picture+')');
+        $(".cart-items").append($template);
+
+        }
+        updateTotal();
       }
 
-      function makeProductItem($template, product){
-        $template.find('.product-menu').attr('productId', product["id"]);
-        $template.find('.product-name').text(product.name);
-        $template.find('img').attr('src', "/images/"+ product.picture);
-        $template.find('.product-price').text('$' + product["price"]);
-        $template.find('.product-description').text( product["description"]);
-        return $template;
-      }
-
-
+      function saveCart() {
+    
+            if (window.localStorage)
+            {
+                localStorage.shoppingCart = JSON.stringify(shoppingCart);
+            }
+        }
+      
       $(function(){
+
+        for (var i=0; i<Object.keys(data).length; i++){
+            var $template = $($('#productItem').html());
+            $(".grid-layout").append(makeProductItem($template, data[i]));
+        }
+
+        if (localStorage.shoppingCart){
+          shoppingCart = JSON.parse(localStorage.shoppingCart);
+        }
       
         $("#cart-trigger").on('click', function () {
-            toggle_panel($('#cart-sidebar'), $('#shadow-layer'));
+          showCart();
+          toggle_panel($('#cart-sidebar'), $('#shadow-layer'));
         });
         
         $("#cart-sidebar .remove").on('click', function () {
@@ -208,15 +274,10 @@
           $('.mega-menu').removeClass('mega-active');
         });
         
-        
-        for (var i=0; i<Object.keys(data).length; i++){
-            var $template = $($('#productItem').html());
-            $(".grid-layout").append(makeProductItem($template, data[i]));
-        }
-
       
         $(".buy-now").each(function(index, element){
             $(element).on('click', function (e) {
+                
                 $(e.target).parents('.product').find('.product-name')
                 .css('display', 'none');
                 $(e.target).parents('.product').find('.icon').css('display', 'none');
@@ -238,11 +299,154 @@
                 $(e.target).parents('.product-menu').css('top', '80%');
             });
         });
-       
         
+
+        $(".product-detail").each(function(index, element){
+            $(element).on('click', function () {
+                
+                var $template = $($('#productDetail').html());
+                $template.find('.product-price').text($(this).parents(".product").find(".product-price").text());
+
+                $template.find('.productDescription').text($(this).parents(".contentItem").find(".productDescription").text());
+
+                $template.find('.product-name').text($(this).parents(".product").find(".product-name").text());
+
+                $template.find('figcaption').attr('productId', $(this).parents(".product-menu").attr("productId"));
+                $template.find('.product-description').text($(this).parents(".product").find(".product-description").text());
+                
+                $template.find('img').eq(0).attr('src', $(this).parents(".product").find("img").attr('src'));
+                
+                $(".grid-layout").empty();
+
+                $(".grid-layout").append($template);
+
+                let slideIndex = 1;
+
+                const prev = $(".prev");
+                const next = $(".next");
+
+                function showSlide(n) {
+                    let i;
+                    let x = $(".slide");
+                    if (n > x.length) {
+                        slideIndex = 1
+                    }    
+                    if (n < 1) {
+                        slideIndex = x.length
+                    }
+                    for (i = 0; i < x.length; i++) {
+                        x[i].style.display = "none";  
+                    }
+
+                    x[slideIndex-1].style.display = "block";  
+                }
+
+                showSlide(slideIndex);
+
+                function nextPrev(n) {
+                    showSlide(slideIndex += n);
+                }
+
+                next.click(function () {
+                    nextPrev(1);
+                });
+
+                prev.click(function () {
+                    nextPrev(-1);
+                });
+
+
+                var box = [],
+                    months = [ "Січень", "Лютий", "Березень", "Квітень", "Травень", "Червень", "Липень", "Верпень", "Вересень", "Жовтень", "Листопад", "Грудень"],
+                    weekday = ['Понеділок', 'Вівторок', 'Середа', 'Четвер', 'П\'ятниця', 'Субота', 'Неділя'];
+
+                var date = new Date();
+                    box.push({"weekday":weekday[date.getDay()-1]});
+                    box.push({"day":date.getDate()});
+                    box.push({"month":months[date.getMonth()]});
+                    box.push({"year":date.getFullYear()});
+
+                var span = document.createElement('span'),
+                    time = document.createElement('time');
+
+                for (var i=0; i<box.length; i++){
+                    var sp = span.cloneNode(false);
+                    for (var k in box[i]){
+                        sp.innerHTML = box[i][k];
+                        sp.className = k;
+                    }
+
+                    time.appendChild(sp);
+                }
+                time.className = "date-as-calendar position-pixels";
+                document.body.appendChild(time);
+
+                var date = new Date(),
+                    year = date.getFullYear(),
+                    month = date.getMonth(),
+                    day = date.getUTCDate(),
+                    months = [ "Січень", "Лютий", "Березень", "Квітень", "Травень", "Червень", "Липень", "Верпень", "Вересень", "Жовтень", "Листопад", "Грудень"];
+
+                document.getElementById('daymonth').innerHTML = months[month] + " " + day;
+                document.getElementById('year').innerHTML = year;
+                var clockH = document.querySelector(".hours");
+                var clockM = document.querySelector(".minutes");
+
+                function times() {
+                var d = new Date(),
+                    s = d.getSeconds() * 6,
+                    m = d.getMinutes() * 6 + (s / 60),
+                    h = d.getHours() % 12 / 12 * 360 + (m / 12);
+                    clockH.style.transform =  "rotate("+h+"deg)";
+                    clockM.style.transform =  "rotate("+m+"deg)";
+                }
+
+                var clock = setInterval(times, 1000);
+                times();
+
+                $(".addtocart").on('click', function(){
+                    console.log('Add to cart');
+                });
+
+            });
+        });
+
         
         $(".add-to-cart").each(function(index, element){
             $(element).on('click', function (e) {
+                let id = $(this).parents('.product-menu').attr("productId");
+                let price = $(this).parents(".product-menu").find(".product-price").text();
+                let name = $(this).parents(".product").children(".product-name").text();
+                let quantity = $(this).parents(".product-menu").find(".quantity").val();
+                let picture = $(this).parents(".product").find("img").attr('src');
+
+
+                for (let i in shoppingCart) {
+                    if(shoppingCart[i].Id == id) {
+                       shoppingCart[i].Quantity = parseInt(shoppingCart[i].Quantity) + parseInt(quantity);
+                       saveCart();
+                       $(this).parents('.product').find('.product-name')
+                        .css('display', 'block');
+                       $(this).parents('.product').find('.icon').css('display', 'block');
+                       $(this).parents('.product').find('.buy-now').css('display','block');
+                       $(this).parents('.product').find(' .product-detail').css('display', 'none');
+                       $(this).parents('.product-menu').css('top', '80%');
+                      return;
+                    }
+                }
+
+                let item = { 
+                    Id: id, 
+                    Product: name,  
+                    Price: price, 
+                    Quantity: quantity, 
+                    Picture: picture 
+                }; 
+
+                shoppingCart.push(item);
+
+                saveCart();
+
                 var y = 180;    
                 $(e.target).parents('.product-wrapper')
                 .css('transform', 'rotateY(' + y + 'deg)');
@@ -270,6 +474,17 @@
                     }, 1000);
             }
 
+            $('.shoppingcart').fadeOut(1000, function() {
+                $(this).css({
+                    'backgroundColor':'rgba(255,0,0,0.5)',
+                    'borderRadius': '50%',
+                    'transform': 'scale(2, 2)'
+                    });
+            });
+      
+
+            $('.shoppingcart').fadeIn(500);
+
             imgclone.animate({
                 'width': 0,
                 'height': 0
@@ -288,38 +503,7 @@
                 $(e.target).parents('.product').find('.icon').toggle();
             });
 
-            let productId = this.parentNode.getAttribute("productId");
-            console.log(productId);
-      
-            var items = document.querySelector(".cart-items").children;
-
-            var matched = null;
-
-            matched = Array.from(items).filter( (index) => {
-                    return index.getAttribute("id") === "product_"+productId;
-            });
-
-            var q = 0;
-      
-            if (matched.length) {
-                    
-                    q = + parseInt(matched[0].querySelectorAll(':scope > .qty .item-quantities')[0].textContent) + parseInt(this.parentNode.querySelectorAll(":scope > .how-many .quantity-input .quantity")[0].getAttribute('value'));
-                    
-                    matched[0].querySelectorAll(':scope > .qty .item-quantities')[0].textContent = q;
-                
-            } else {
-              let template = document.querySelector('#cartItem').content;
-              template.querySelector('li').setAttribute('id', 'product_' + productId);
-              let quantity = this.parentNode.querySelectorAll(":scope > .how-many .quantity-input .quantity");
-              template.querySelector("span.item-quantities").textContent = quantity[0].getAttribute('value');
-              template.querySelector('.item-prices').setAttribute('id', "price_"+productId);
-              template.querySelector("span.item-name").textContent = ' '+this.parentNode.parentNode.querySelectorAll(":scope > .product-name")[0].textContent; 
-              
-              template.querySelector('.item-prices').textContent = this.parentNode.querySelectorAll(":scope > .product-price")[0].textContent;
-              template.querySelector('span.qty').setAttribute('style', 'background-image:'+ 'url('+this.parentNode.parentNode.querySelector('img').getAttribute('src')+')');
-              document.querySelector('.cart-items').append(document.importNode(template, true));
-
-              }
+            
               updateTotal();
             
             });
@@ -327,11 +511,24 @@
 
         
         $('body').on('click', '.cart-items .item-remove', function () {
-            var $this = $(this),
-            $item = $this.parents('li');
-            $item.remove();
-        });
+            var index = $(this).parent().attr("id");
+            // console.log('index= ', index);
 
+            shoppingCart.splice(shoppingCart.indexOf(shoppingCart.find(x => x.Id === index)),1); 
+            
+            $(this).parents('li').remove();
+            saveCart();
+            updateTotal();
+            }
+        );
+
+
+        $('body').on('click', '.cart .clear-cart', function () {
+            localStorage.removeItem('shoppingCart');
+            $(".cart-items").empty();
+            shoppingCart = [];
+            updateTotal();
+        });
 
         let plus = document.getElementsByClassName('plus');
         plus = Array.prototype.slice.call(plus); // теперь plus - массив
@@ -347,44 +544,14 @@
         minus.forEach(function(elem) {
           elem.addEventListener('click', function() {
               let val = parseInt(this.nextElementSibling.getAttribute('value'));
-              this.nextElementSibling.setAttribute('value', val+1);
+              this.nextElementSibling.setAttribute('value', val-1);
               });
         });
-
-
-        function updateTotal() {
-          var quantities = 0,
-          total = 0,
-          
-          $cartTotal = $('.cart-total span'),
-          items = $('.cart-items').children();
-
-          items.each(function (index, item) {
-              var $item = $(item);
-              total += parseFloat($item.find('.item-prices').text());
-          });
-
-          $cartTotal.text(parseFloat(Math.round(total * 100) / 100).toFixed(2));
-
-          if (total === 0 ){
-            
-            $('.shopping-cart').fadeOut(500, function() {
-                    $(this).css({
-                        'backgroundColor':'',
-                        'borderRadius': '0%',
-                        'transform': 'scale(1, 1)'
-                        });
-                });
-          
-            $('.shopping-cart').fadeIn(500);        
-          }
-        }
+      
 
       });
 
     </script>
-
-  
     
   </body>
 </html>

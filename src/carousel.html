@@ -1,122 +1,111 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-	  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hello cart</title>
-    <script defer src="/fontawesome/js/fontawesome-all.js"></script>
-    <link rel="stylesheet" href="/css/main.css">
-
-    <style>
-       #header {
-            position:relative; 
-            height:150px; 
-            width:350px;
-            margin: 10px auto;
-        }
-       .header {
-           position:absolute; 
-           top:0; 
-           left:0;
-        }
-    
-         
-    </style>
-  </head>
-
+  //= templates/head.html
   <body>
-    <nav class="navbar">
-      <nav class="wrapper">
-        <div class="logo"><img src="/images/logo.png"></div><!-- Logo -->
-        <input type="checkbox" id="menu-toggle" />
-        <label for="menu-toggle" class="label-toggle"></label>
-        <ul class="flexmenu">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="#" id="catalog">Products</a></li>
-          <li><a href="blog.html">Blog</a></li>
-          <li><a href="contact.html">Contact</a></li>
-          <li><a href="#" id="cart-trigger"><i class="fas  fa-shopping-cart"></i>&nbsp;Cart</a></li>
-        </ul>
-      </nav>
-    </nav>
-    <h1>Fade Carousel</h1>    
+  //= templates/navigation.html
     
-    <header id="header">
-            <div class="header cat1 active">
-                <div class="header-content">
-                    <img src="/images/cat1.jpg" alt="" />
-                </div>
+    <div class="container">
+            <div class="image-slider-wrapper">
+                <ul id="image_slider">
+                  <li><img src="images/03.jpg"></li>
+                  <li><img src="images/01.jpg"></li>
+                  <li><img src="images/02.jpg"></li>
+                  <li><img src="images/03.jpg"></li>
+                </ul>
             </div>
-            <div class="header cat2">
-                <div class="header-content">
-                    <img src="/images/cat2.jpg" alt="" />
-                </div>
-            </div>
-            <div class="header cat3">
-                <div class="header-content">
-                    <img src="/images/cat3.jpg" alt="" />
-                </div>
-            </div>
-    </header>    
+    </div>
+          
+    <h1>Hello, Carousel!</h1> 
         
-    <div class="grid-layout">
       
+  //= templates/footer.html
+  //= templates/aside.html
+  //= templates/cart.html
+  //= templates/product.html
+  //= templates/detail.html
+  //= templates/mega.html
+               
+    <script src="/js/jquery.min.js"></script>             
+    <script src="/js/main.js"></script>
+    <script src="/js/data.js"></script>
     
-    </div>            
-    
-    <!-- Footer Area Start -->
-    <footer id="footer">
-    </footer>
-    
-    <script src="/js/jquery.min.js"></script>    
     <script>
       
-        
-      
-    $(function(){
+      var carousel;
 
-        $("#header > div:gt(0)").hide();
-            
-        var carouselInterval = '';
+var liItems;
+var numberOfLis;
+var sliderWidth = 0;
+var imageWidth;
+var currentImage = 0;
 
-        var carousel = function(){
-            carouselInterval = setInterval(function() { 
-            $('#header > div:first')
-                .fadeOut(500)
-                .next()
-                .fadeIn(500)
-                .end()
-                .appendTo('#header');
-            },  3000);
-        };
+function init(){
+    carousel = document.getElementById('image_slider');
+    liItems = carousel.children;
+    numberOfLis = liItems.length;
 
-        $(carousel()); // Init carousel function
+    for (i = 0; i < numberOfLis; i++){
+            imageWidth = liItems[i].childNodes[0].clientWidth;
+            sliderWidth += imageWidth;
+        }
+    carousel.style.width = parseInt(sliderWidth) + 'px';
+    slider();
 
-        $("#header").hover(function(){
-            // Stop carousel on hover
-        clearInterval(carouselInterval);
-        },function(){
-            carousel();
+}
+
+function slider(){
+        animate({
+            delay:17,
+            duration: 3000,
+            delta:function(p){return Math.max(0, -1 + 2 * p)},
+            step:function(delta){
+                    carousel.style.left = '-' + parseInt(currentImage * imageWidth + delta * imageWidth) + 'px';
+                },
+            callback:function(){
+                currentImage++;
+                if(currentImage < numberOfLis-1){
+                    slider();
+                }
+                else{
+                    var left = (numberOfLis - 1) * imageWidth;
+                    setTimeout(function(){goBack(left)},2000);
+                    setTimeout(slider, 4000);
+                }
+            }
         });
+}
+function goBack(left_limits){
+    currentImage = 0;
+    setInterval(function(){
+        if(left_limits >= 0){
+            carousel.style.left = '-' + parseInt(left_limits) + 'px';
+            left_limits -= imageWidth / 10;
+        }
+    }, 17);
+}
 
+function animate(opts){
+    var start = new Date;
+    var id = setInterval(function(){
+        var timePassed = new Date - start;
+        var progress = timePassed / opts.duration
 
-        //Direction Arrow links
-        // $(".button-sales").click(function(){
-        //     $(".header").fadeOut(800);
-        //     $(".sales").animate({opacity:"show"},800);
-        // });
-        // $(".button-modern").click(function(){
-        //     $(".header").fadeOut(800);
-        //     $(".modern").animate({opacity:"show"},800);
-        // });
-        // $(".button-antique").click(function(){
-        //     $(".header").fadeOut(800);
-        //     $(".antique").animate({opacity:"show"},800);
-        // });
-    });
+        if(progress > 1){
+            progress = 1;
+        }
+        var delta = opts.delta(progress);
+        opts.step(delta);
 
+        if (progress == 1){
+            clearInterval(id);
+            opts.callback();
+        }
+    }, opts.dalay || 17);
+}
+
+window.onload = init;
 
     </script>
+    
   </body>
 </html>

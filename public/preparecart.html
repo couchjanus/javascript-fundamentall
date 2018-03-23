@@ -27,7 +27,7 @@
         </ul>
       </nav>
     </nav>
-    <h1>Hello, Cart!</h1>        
+    <h1>Hello, Storage!</h1>        
         
     <div class="grid-layout">
     
@@ -158,38 +158,47 @@
               </ul>
           </footer>
       </div>
-    
                
     <script src="/js/jquery.min.js"></script>             
-    <!-- <script src="/js/main.js"></script> -->
+    <script src="/js/main.js"></script>
     <script src="/js/data.js"></script>
     
     <script>
       
-      function toggle_panel(panel, background_layer) {
-        if (panel.hasClass('show-sidebar')) {
-          panel.removeClass('show-sidebar');
-          background_layer.removeClass('is-visible');
-        } else {
-            panel.addClass('show-sidebar');
-            background_layer.addClass('is-visible');
+    
+      var shoppingCart = [];
+
+      function showCart(){
+        if (shoppingCart.length == 0) {
+          console.log("Your Shopping Cart is Empty!");
+          return;
         }
       }
 
-      function makeProductItem($template, product){
-        $template.find('.product-menu').attr('productId', product["id"]);
-        $template.find('.product-name').text(product.name);
-        $template.find('img').attr('src', "/images/"+ product.picture);
-        $template.find('.product-price').text('$' + product["price"]);
-        $template.find('.product-description').text( product["description"]);
-        return $template;
-      }
-
-
+      function saveCart() {
+    
+            if (window.localStorage)
+            {
+                localStorage.shoppingCart = JSON.stringify(shoppingCart);
+                
+            }
+        }
+      
       $(function(){
+
+        for (var i=0; i<Object.keys(data).length; i++){
+            var $template = $($('#productItem').html());
+            $(".grid-layout").append(makeProductItem($template, data[i]));
+        }
+
+        if (localStorage.shoppingCart){
+          shoppingCart = JSON.parse(localStorage.shoppingCart);
+        }
+        // console.log(JSON.stringify(data));
       
         $("#cart-trigger").on('click', function () {
-            toggle_panel($('#cart-sidebar'), $('#shadow-layer'));
+          showCart();
+          toggle_panel($('#cart-sidebar'), $('#shadow-layer'));
         });
         
         $("#cart-sidebar .remove").on('click', function () {
@@ -209,11 +218,7 @@
         });
         
         
-        for (var i=0; i<Object.keys(data).length; i++){
-            var $template = $($('#productItem').html());
-            $(".grid-layout").append(makeProductItem($template, data[i]));
-        }
-
+        
       
         $(".buy-now").each(function(index, element){
             $(element).on('click', function (e) {
@@ -243,6 +248,32 @@
         
         $(".add-to-cart").each(function(index, element){
             $(element).on('click', function (e) {
+
+            let id = $(this).parents('.product-menu').attr("productId");
+            console.log(id);
+
+            let price = $(this).parents(".product-menu").find(".product-price").text();
+            console.log(price);
+
+            let name = $(this).parents(".product").children(".product-name").text();
+            console.log(name);
+            let quantity = $(this).parents(".product-menu").find(".quantity").val();
+            console.log(quantity);
+
+            let picture = $(this).parents(".product").find("img").attr('src');
+            console.log(picture);
+
+
+            let item = { 
+                Id: id, 
+                Product: name,  
+                Price: price, 
+                Quantity: quantity, 
+                Picture: picture 
+            }; 
+
+            console.log(item);
+
                 var y = 180;    
                 $(e.target).parents('.product-wrapper')
                 .css('transform', 'rotateY(' + y + 'deg)');
@@ -269,6 +300,17 @@
                             'height': 75
                     }, 1000);
             }
+
+            $('.shoppingcart').fadeOut(1000, function() {
+                $(this).css({
+                    'backgroundColor':'rgba(255,0,0,0.5)',
+                    'borderRadius': '50%',
+                    'transform': 'scale(2, 2)'
+                    });
+            });
+      
+
+            $('.shoppingcart').fadeIn(500);
 
             imgclone.animate({
                 'width': 0,
@@ -347,38 +389,10 @@
         minus.forEach(function(elem) {
           elem.addEventListener('click', function() {
               let val = parseInt(this.nextElementSibling.getAttribute('value'));
-              this.nextElementSibling.setAttribute('value', val+1);
+              this.nextElementSibling.setAttribute('value', val-1);
               });
         });
-
-
-        function updateTotal() {
-          var quantities = 0,
-          total = 0,
-          
-          $cartTotal = $('.cart-total span'),
-          items = $('.cart-items').children();
-
-          items.each(function (index, item) {
-              var $item = $(item);
-              total += parseFloat($item.find('.item-prices').text());
-          });
-
-          $cartTotal.text(parseFloat(Math.round(total * 100) / 100).toFixed(2));
-
-          if (total === 0 ){
-            
-            $('.shopping-cart').fadeOut(500, function() {
-                    $(this).css({
-                        'backgroundColor':'',
-                        'borderRadius': '0%',
-                        'transform': 'scale(1, 1)'
-                        });
-                });
-          
-            $('.shopping-cart').fadeIn(500);        
-          }
-        }
+      
 
       });
 

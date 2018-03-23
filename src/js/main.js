@@ -1,23 +1,55 @@
-(function(){
+// (function(){
     
-    var hamburgerToggle = document.querySelector('#menu-toggle');
+//     var hamburgerToggle = document.querySelector('#menu-toggle');
     
-    hamburgerToggle.addEventListener('click', function(e){
-        e.preventDefault();
+//     hamburgerToggle.addEventListener('click', function(e){
+//         e.preventDefault();
         
-        document.querySelector('.flexmenu').classList.toggle('active');
+//         document.querySelector('.flexmenu').classList.toggle('active');
+//     });
+
+// })();
+
+function toggle_panel(panel, background_layer) {
+    if (panel.hasClass('show-sidebar')) {
+      panel.removeClass('show-sidebar');
+      background_layer.removeClass('is-visible');
+    } else {
+        panel.addClass('show-sidebar');
+        background_layer.addClass('is-visible');
+    }
+  }
+
+  function makeProductItem($template, product){
+    $template.find('.product-menu').attr('productId', product["id"]);
+    $template.find('.product-name').text(product.name);
+    $template.find('img').attr('src', "/images/"+ product.picture);
+    $template.find('.product-price').text(product["price"]);
+    $template.find('.product-description').text( product["description"]);
+    return $template;
+  }
+  function updateTotal() {
+    var quantities = 0,
+    total = 0,
+    
+    $cartTotal = $('.cart-total span'),
+    items = $('.cart-items').children();
+    items.each(function (index, item) {
+        var $item = $(item);
+        total += parseFloat($item.find('.item-prices').text())*
+        parseFloat($item.find('.item-quantities').text());
     });
+    $cartTotal.text(parseFloat(Math.round(total * 100) / 100).toFixed(2));
+    if (total === 0 ){
+      
+      $('.shopping-cart').fadeOut(500, function() {
+              $(this).css({
+                  'backgroundColor':'',
+                  'borderRadius': '0%',
+                  'transform': 'scale(1, 1)'
+                  });
+          });
     
-    // var div = document.createElement('div');
-    // var catrItem = document.querySelector('.cart');
-    // var layout = document.querySelector('.grid-layout');
-    
-    // for (var i=0; i<33; i++){
-    //     var item = div.cloneNode(false);
-    //     item.setAttribute('class', 'grid-item');
-    //     item.innerHTML = 'Item'+i; 
-    //     layout.append(item);
-    // }
-
-
-})();
+      $('.shopping-cart').fadeIn(500);        
+    }
+}
