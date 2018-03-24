@@ -23,7 +23,7 @@ function toggle_panel(panel, background_layer) {
   function makeProductItem($template, product){
     $template.find('.product-menu').attr('productId', product["id"]);
     $template.find('.product-name').text(product.name);
-    $template.find('img').attr('src', "/images/"+ product.picture);
+    $template.find('img').attr('src', "/images/"+ product.picture[0]);
     $template.find('.product-price').text(product["price"]);
     $template.find('.product-description').text( product["description"]);
     return $template;
