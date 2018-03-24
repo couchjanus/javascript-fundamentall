@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+	  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hello cart</title>
+
+    <!-- Bootstrap CSS -->
+    <!-- <link rel="stylesheet" href="/css/bootstrap.css"> -->
+
+    <script defer src="/fontawesome/js/fontawesome-all.js"></script>
+    <link rel="stylesheet" href="/css/main.css">
+
+    <style>
+         
+    </style>
+  </head>
+
+  <body>
+    <nav class="navbar">
+      <nav class="wrapper">
+        <div class="logo"><img src="/images/logo.png"></div><!-- Logo -->
+        <input type="checkbox" id="menu-toggle" />
+        <label for="menu-toggle" class="label-toggle"></label>
+        <ul class="flexmenu">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="#" id="catalog">Products</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="#" id="cart-trigger"><i class="fas  fa-shopping-cart"></i>&nbsp;Cart</a></li>
+        </ul>
+      </nav>
+    </nav>
+    <BR><br> <BR><br><BR><br>
+    <div class="card text-center">
+        
+        <div class="card-header">
+          Hello, AJAX!
+        </div>
+        <div class="card-body">
+          <h4 class="card-title">Консоль выполнения запроса:</h4>
+          <p class="card-text" id="console">Обрабатываем ответ сервера.</p>
+          <a href="#" class="btn btn-primary btnGo">Запустить скрипт</a>
+        </div>
+        <div class="card-footer text-muted" id="printResult">
+          ответ сервера
+        </div>
+    </div>
+  
+    
+    <!-- Footer Area Start -->
+    <footer id="footer">
+    </footer>
+    <!-- Footer Area Stop -->
+    
+
+    
+<script src="/js/jquery.min.js"></script>    
+<script>
+    $('.btnGo').on('click', function(){
+
+        //Создаём запрос
+        $.ajax({
+            url: 'http://headers.jsontest.com/',
+            
+            success: function(data){
+                $('#console').html('<div class="alert alert-success" role="alert">4: Обмен завершен!</div>');
+                $("#printResult").html("<b>Прибыли данные: "+data['User-Agent']+"</b>");
+                console.log(data);
+            }
+        });
+
+    });
+      </script>
+  </body>
+</html>

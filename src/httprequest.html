@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+  //= templates/head.html
+  <body>
+  //= templates/navigation.html
+    <h1>Hello, Storage!</h1>        
+        
+    <div class="grid-layout">
+      <h2>Let create HttpRequest</h2>
+    </div>
+      
+  //= templates/footer.html
+  //= templates/aside.html
+  //= templates/cart.html
+  //= templates/product.html
+  //= templates/detail.html
+  //= templates/mega.html
+               
+    <script src="/js/jquery.min.js"></script>             
+    <script src="/js/main.js"></script>
+    <script src="/js/data.js"></script>
+    
+    <script>
+      function CreateRequest()
+        {
+            var httpRequest = false;
+
+            if (window.XMLHttpRequest)
+            {
+                //Gecko-совместимые браузеры, Safari, Konqueror
+                httpRequest = new XMLHttpRequest();
+                httpRequest.overrideMimeType('text/xml');
+            }
+            else if (window.ActiveXObject)
+            {
+                //Internet explorer
+                try
+                {
+                    httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+                }    
+                catch (CatchException)
+                {
+                    httpRequest = new ActiveXObject("Msxml2.XMLHTTP");
+                }
+            }
+        
+            if (!httpRequest)
+            {
+                console.log("Невозможно создать XMLHttpRequest");
+            }
+            
+            return httpRequest;
+        } 
+
+        //Создаём запрос
+        
+        var Request = CreateRequest();
+        
+        //Проверяем существование запроса
+        
+        if (!Request)
+        {
+            console.log("Невозможно создать XMLHttpRequest");
+        }
+        
+        console.log("Ура! Мы создали XMLHttpRequest. Что с ним делать?");
+
+    
+
+    </script>
+    
+  </body>
+</html>

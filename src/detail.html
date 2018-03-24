@@ -129,8 +129,13 @@
                 $template.find('figcaption').attr('productId', $(this).parents(".product-menu").attr("productId"));
                 $template.find('.product-description').text($(this).parents(".product").find(".product-description").text());
                 
-                $template.find('img').eq(0).attr('src', $(this).parents(".product").find("img").attr('src'));
-                
+        
+                var pics = data[$(this).parents(".product-menu").attr("productId")]['picture'];
+                for (var j=0; j<pics.length; j++){
+                    $template.find('img').eq(j).attr('src', '/images/'+pics[j]);
+                }
+            
+
                 $(".grid-layout").empty();
 
                 $(".grid-layout").append($template);
@@ -316,6 +321,8 @@
       
 
       });
+
+
 
     </script>
     

@@ -190,9 +190,24 @@
                
     <script src="/js/jquery.min.js"></script>             
     <script src="/js/main.js"></script>
-    <script src="/js/data.js"></script>
+    <!-- <script src="/js/data.js"></script> -->
     
     <script>
+
+    var data = [];
+
+    var url = 'https://api.myjson.com/bins/11ozzz';
+
+    $.ajax({
+        url: url,
+        method: 'GET'
+    }).then(
+        function(json_data) {
+
+        console.log(json_data);
+        
+        for(var i in json_data)
+                data.push(json_data[i]);
       
     
       var shoppingCart = [];
@@ -494,6 +509,7 @@
 
       });
 
+    });
 
 
     </script>

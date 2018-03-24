@@ -190,10 +190,70 @@
                
     <script src="/js/jquery.min.js"></script>             
     <script src="/js/main.js"></script>
-    <script src="/js/data.js"></script>
+    <!-- <script src="/js/data.js"></script> -->
     
     <script>
-      
+
+    var data = [];
+
+    var url = 'https://api.myjson.com/bins/11ozzz';
+
+
+  function CreateRequest()
+    {
+        var httpRequest = false;
+
+        if (window.XMLHttpRequest)
+        {
+            //Gecko-совместимые браузеры, Safari, Konqueror
+            httpRequest = new XMLHttpRequest();
+            httpRequest.overrideMimeType('text/xml');
+        }
+        else if (window.ActiveXObject)
+        {
+            //Internet explorer
+            try
+            {
+                 httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+            }    
+            catch (CatchException)
+            {
+                 httpRequest = new ActiveXObject("Msxml2.XMLHTTP");
+            }
+        }
+     
+        if (!httpRequest)
+        {
+            console.log("Невозможно создать XMLHttpRequest");
+        }
+        
+        return httpRequest;
+    } 
+
+    //Создаём запрос
+    var request = CreateRequest();
+    
+    //Проверяем существование запроса
+    
+    if (!request)
+    {
+        console.log("Невозможно создать XMLHttpRequest");
+    }
+    else
+    {
+    
+    console.log("Ура! Мы создали XMLHttpRequest. Что с ним делать?");
+
+    request.onreadystatechange = function(){
+      if (request.readyState === 4 ) {
+        try {
+           if(request.status==200){
+              var json_data = request.responseText;
+              json_data = JSON.parse(json_data);
+            
+              for(var i in json_data)
+                data.push(json_data[i]);
+  
     
       var shoppingCart = [];
 
@@ -494,6 +554,23 @@
 
       });
 
+  }
+  else if(request.status==404){
+       console.log('Ошибка: запрашиваемый скрипт не найден!');
+        }
+  else {
+       console.log('Ошибка: сервер вернул статус: '+ request.status);
+   }
+ }
+ catch( e ) {
+  console.log('Произошло исключение:  '+ e.description);
+  }
+ }
+}
+
+request.open ('GET', url, true);
+       request.send ('');
+}
 
 
     </script>
