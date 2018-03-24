@@ -9,6 +9,8 @@
             <div class="clock">
               <span class="hours"></span>
               <span class="minutes"></span>
+              <span class="seconds"></span>
+
             </div>
             <div class="date">
               <div id="daymonth"></div>
@@ -219,6 +221,7 @@
                 document.getElementById('year').innerHTML = year;
                 var clockH = document.querySelector(".hours");
                 var clockM = document.querySelector(".minutes");
+                var clockS = document.querySelector(".seconds");
 
                 function times() {
                 var d = new Date(),
@@ -227,6 +230,7 @@
                     h = d.getHours() % 12 / 12 * 360 + (m / 12);
                     clockH.style.transform =  "rotate("+h+"deg)";
                     clockM.style.transform =  "rotate("+m+"deg)";
+                    clockS.style.transform =  "rotate("+s+"deg)";
                 }
 
                 var clock = setInterval(times, 1000);
