@@ -24,6 +24,7 @@
     var url = 'http://localhost:4000/products';
 
     fetch(url).then((response) => response.json())
+    // fetch(url).then(function(response){})
     .then((data) => {
     
       var shoppingCart = [];
@@ -121,19 +122,23 @@
 
         $(".product-detail").each(function(index, element){
             $(element).on('click', function () {
-                
+                $id = $(this).parents(".product-menu").attr("productId");
                 var $template = $($('#productDetail').html());
-                $template.find('.product-price').text($(this).parents(".product").find(".product-price").text());
 
-                $template.find('.productDescription').text($(this).parents(".contentItem").find(".productDescription").text());
+            fetch(url+'/'+$id).then((response) => response.json())
+        .then((data) => {
 
-                $template.find('.product-name').text($(this).parents(".product").find(".product-name").text());
+                $template.find('.product-price').text(data['price']);
 
-                $template.find('figcaption').attr('productId', $(this).parents(".product-menu").attr("productId"));
-                $template.find('.product-description').text($(this).parents(".product").find(".product-description").text());
+                $template.find('.productDescription').text(data['description']);
+
+                $template.find('.product-name').text(data['name']);
+
+                $template.find('figcaption').attr('productId', data['id']);
+                $template.find('.product-description').text(data['description']);
                 
         
-                var pics = data[$(this).parents(".product-menu").attr("productId")]['picture'];
+                var pics = data['picture'];
                 for (var j=0; j<pics.length; j++){
                     $template.find('img').eq(j).attr('src', '/images/'+pics[j]);
                 }
@@ -142,7 +147,7 @@
                 $(".grid-layout").empty();
 
                 $(".grid-layout").append($template);
-
+          
                 let slideIndex = 1;
 
                 const prev = $(".prev");
@@ -181,6 +186,7 @@
                 $(".addtocart").on('click', function(){
                     console.log('Add to cart');
                 });
+            });
 
             });
         });
